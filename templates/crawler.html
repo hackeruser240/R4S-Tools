@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head><title>Site Crawler</title></head>
+<body>
+  <h1>Website Crawler</h1>
+  <form method="POST">
+    <label>Start URL:</label>
+    <input type="text" name="url" required>
+    <label>Max Pages:</label>
+    <input type="number" name="max_pages" value="50">
+    <button type="submit">Crawl</button>
+  </form>
+
+  {% if results %}
+    <h2>Indexed Pages</h2>
+    <ul>
+      {% for url, html in results.items() %}
+        <li><strong>{{ url }}</strong> — {{ html[:100] }}...</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</body>
+</html>

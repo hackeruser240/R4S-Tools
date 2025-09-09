@@ -1,0 +1,43 @@
+<!-- File: templates/homepage.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Rank4Sure AIO Tools after adding Chrome path!</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            margin: 10px 0;
+        }
+        a {
+            text-decoration: none;
+            color: #2980b9;
+            font-weight: bold;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to Rank4Sure's New Suite of AIO Tools 🚀!</h1>
+    <p>Select a tool below to get started:</p>
+
+    <h3>Module 1 Tools:</h3>
+    <ul>
+        {% for route in routes %}
+            <li><a href="{{ route.url }}">{{ route.endpoint }} → {{ route.url }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html>

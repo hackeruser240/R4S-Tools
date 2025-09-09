@@ -1,0 +1,56 @@
+# File: functions_folder/performance_audit.py
+
+import subprocess
+import os
+import uuid
+
+def run_lighthouse_audit(target_url):
+    """Runs Lighthouse audit via subprocess and returns report paths."""
+    report_id = str(uuid.uuid4())
+    output_dir = f"static/reports/{report_id}"
+    os.makedirs(output_dir, exist_ok=True)
+
+    html_path = os.path.join(output_dir, "report.html")
+    html_path = os.path.join(output_dir, "report.html").replace("\\", "/")
+
+    json_path = os.path.join(output_dir, "report.json")
+
+    command = [
+        r"C:\Users\HP\AppData\Roaming\npm\lighthouse.cmd",
+        target_url,
+        "--output=json",
+        "--output=html",
+        f"--output-path={html_path}",
+        "--quiet",
+        "--chrome-flags=--headless --no-sandbox",
+        "--chrome-path=C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+    ]
+
+    try:
+        subprocess.run(command, check=True, capture_output=True, text=True)
+        return {
+            "html": html_path,
+            "json": json_path,
+            "report_id": report_id
+        }
+    except subprocess.CalledProcessError as e:
+        print("STDOUT:", e.stdout)
+        print("STDERR:", e.stderr)
+        return {
+            "error": f"Lighthouse failed after adding chrome path: {e}"
+        }
+    
+
+if __name__ == "__main__":
+    import sys
+    import pprint
+
+    if len(sys.argv) != 2:
+        print("Usage: python performance_audit.py <target_url>")
+        sys.exit(1)
+
+    target_url = sys.argv[1]
+    result = run_lighthouse_audit(target_url)
+
+    print("\n📊 Audit Result:")
+    pprint.pprint(result)

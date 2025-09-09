@@ -1,0 +1,37 @@
+<!-- File: templates/broken_link_checker.html -->
+
+<!DOCTYPE html>
+<html>
+<head><title>Broken Link Checker</title></head>
+<body>
+  <h1>Broken Link Checker</h1>
+  <form method="POST">
+    <label for="url">Enter URL:</label><br>
+    <input type="text" name="url" size="80" required><br><br>
+    <button type="submit">Check Links</button>
+  </form>
+
+  {% if error %}
+    <p style="color:red;"><strong>Error:</strong> {{ error }}</p>
+  {% endif %}
+
+  {% if results %}
+    <h2>Results for {{ results.page_url }}</h2>
+    <p>Total Links Found: {{ results.total_links }}</p>
+
+    <h3>✅ Valid Links</h3>
+    <ul>
+      {% for url, status in results.valid_links %}
+        <li>{{ url }} — Status: {{ status }}</li>
+      {% endfor %}
+    </ul>
+
+    <h3>❌ Broken Links</h3>
+    <ul>
+      {% for url, status in results.broken_links %}
+        <li>{{ url }} — Error: {{ status }}</li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+</body>
+</html>

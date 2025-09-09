@@ -1,0 +1,37 @@
+<!-- File: templates/performance_audit.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Website Performance Audit</title>
+</head>
+<body>
+  <h1>Website Performance Audit</h1>
+
+  <form method="POST">
+    <label for="url">Enter URL:</label><br>
+    <input type="text" name="url" size="80" required><br><br>
+    <button type="submit">Run Audit</button>
+  </form>
+
+  {% if error %}
+    <p style="color:red;"><strong>Error:</strong> {{ error }}</p>
+  {% endif %}
+
+  {% if warning %}
+    <p style="color:orange;"><strong>Warning:</strong> {{ warning }}</p>
+  {% endif %}
+
+  {% if report_url %}
+    <h2>Audit Results</h2>
+    <ul>
+      <li><strong>HTML Report:</strong> <a href="{{ report_url }}" target="_blank">View</a></li>
+      <li><strong>PDF Report:</strong>
+        <a href="{{ url_for('download_report', report_id=report_id) }}" target="_blank">
+          <button type="button">Download PDF</button>
+        </a>
+      </li>
+    </ul>
+  {% endif %}
+</body>
+</html>

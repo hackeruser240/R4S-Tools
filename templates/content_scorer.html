@@ -1,0 +1,30 @@
+<!-- File: content_scorer.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Content Scorer</title>
+</head>
+<body>
+    <h2>Content Scorer</h2>
+    <form method="POST">
+        <label for="content">Content:</label><br>
+        <textarea name="content" rows="10" cols="80"></textarea><br><br>
+
+        <label for="reference">Reference Topic:</label><br>
+        <input type="text" name="reference" size="80"><br><br>
+
+        <input type="submit" value="Score Content">
+    </form>
+
+    {% if result %}
+        <h3>Results:</h3>
+        <ul>
+            <li><strong>Readability Score:</strong> {{ result.readability_score }}</li>
+            <li><strong>Grade Level:</strong> {{ result.grade_level }}</li>
+            <li><strong>Semantic Similarity:</strong> {{ result.semantic_similarity }}</li>
+            <li><strong>Summary:</strong> {{ result.summary }}</li>
+        </ul>
+    {% endif %}
+</body>
+</html>

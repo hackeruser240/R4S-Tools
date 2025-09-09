@@ -1,0 +1,26 @@
+Flask
+requests
+beautifulsoup4
+spacy 
+keybert 
+scikit-learn
+
+#content scorer
+flask
+textstat
+transformers
+torch
+numpy
+
+#broken Link checker
+aiohttp
+
+#redirect mapper 
+httpx
+networkx
+
+#image_optimizer
+Pillow
+
+#performance_audit:
+weasyprint

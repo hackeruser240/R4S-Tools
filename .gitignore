@@ -1,0 +1,11 @@
+#main folder:
+
+__pycache__/
+aio-env/
+audits/
+optimized/
+static/
+uploads/
+
+#functions_folder
+functions_folder/__pycache__/
