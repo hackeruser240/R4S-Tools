@@ -1,0 +1,18 @@
+# --- ADD THE FOLLOWING LINES TO /home/rank4sure/public_html/.htaccess ---
+# Script to modify the routing protocols ahead of rank4sure.com/aio
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+
+  # Skip Flask app directory from further WordPress rewrite processing
+  RewriteRule ^aio - [L]
+
+  # Exclude URIs for Flask (ensure WordPress doesn't try to handle them)
+  RewriteCond %{REQUEST_URI} !^/aio/ [NC]
+
+  # Flask app rule: Directly route requests for /aio/subpath to app.py
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^aio/(.*)$ /home/rank4sure/aio/app.py/$1 [L] # <--- ENSURE THIS PATH IS CORRECT FOR YOUR SERVER
+</IfModule>
+# --- END NEW LINES ---
