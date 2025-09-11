@@ -1,0 +1,44 @@
+in homepage.html, there is:
+
+(just a snippet, don't start crying)
+
+<body>
+    <h1>Welcome to Rank4Sure's New Suite of AIO Tools!</h1>
+    <p>Select a tool below to get started:</p>
+
+    <h3>Module 1 Tools:</h3>
+    <ul>
+        <a href="{{url_for('seo_analyzer')}}">SEO Analyzer</a>
+    </ul>
+</body>
+
+then, in app.py:
+
+@app.route("/")
+def homepage():
+    return render_template("homepage.html")
+
+@app.route('/aio', methods=['GET', 'POST'])
+def aio():
+    return render_template('homepage.html')
+
+i go to "https://rank4sure.com/aio", i get:
+
+Internal Server Error
+The server encountered an internal error and was unable to complete your request. Either the server is overloaded or there is an error in the application.
+
+i check the logs:
+
+App 4054119 output:   File "/home/rank4sure/aio/templates/homepage.html", line 38, in top-level template code
+App 4054119 output:     <a href="{{url_for('seo_analyzer')}}">SEO Analyzer</a>
+App 4054119 output:   File "/home/rank4sure/virtualenv/aio/3.10/lib/python3.10/site-packages/flask/app.py", line 1071, in url_for
+App 4054119 output:     return self.handle_url_build_error(error, endpoint, values)
+App 4054119 output:   File "/home/rank4sure/virtualenv/aio/3.10/lib/python3.10/site-packages/flask/app.py", line 1060, in url_for
+App 4054119 output:     rv = url_adapter.build(  # type: ignore[union-attr]
+App 4054119 output:   File "/home/rank4sure/virtualenv/aio/3.10/lib/python3.10/site-packages/werkzeug/routing/map.py", line 924, in build
+App 4054119 output:     raise BuildError(endpoint, values, method, self)
+App 4054119 output: werkzeug.routing.exceptions.BuildError: Could not build url for endpoint 'seo_analyzer'. Did you mean 'seo_analyzer_route' instead?
+
+
+
+any idea what's going on?

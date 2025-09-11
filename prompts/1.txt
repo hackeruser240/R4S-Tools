@@ -1,0 +1,16 @@
+i have been trying yo upload my flask project on my website.
+i have uploaded the files to /home/rank4sure/aio in my cpanel. the folder contains app.py which is the entry point of the application.
+now i want to setup the python app in cpanel.
+there are the following options:
+
+1. Application root
+2. Application URL
+3. Application startup file
+4. Application Entry point
+
+i am attaching app.py
+
+what you need to do:
+
+1. check if the app.py is correctly setup to run and make the website live.
+2. give me the values of the above four options that need to be configured in cpanel

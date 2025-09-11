@@ -1,0 +1,17 @@
+rank4sure.com/aio is up and running.
+now i have a new problem.
+there are multiple internal links served from "rank4sure.com/aio".
+
+
+instead of clicking a link and going to "https://rank4sure.com/aio/seo_analyzer", it goes to "https://rank4sure.com/seo_analyzer".
+BUT, the link "https://rank4sure.com/aio/seo_analyzer" IS live.
+
+
+the problem is just that the on "https://rank4sure.com/aio", its routing to "https://rank4sure.com/seo_analyzer".
+
+
+is there any problem here?
+
+
+the python app setup and htaccess is actually correct. 
+could this be any problem with the app.py?
