@@ -13,20 +13,26 @@ from functions_folder.image_optimizer import image_optimizer
 import os 
 
 app=Flask(__name__)
-app.config['UPLOAD_FOLDER'] = 'uploads'
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
+
+UPLOAD_FOLDER = os.path.join(app.root_path, 'uploads')
+REPORT_FOLDER = os.path.join(app.root_path, 'static', 'reports')
+os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+os.makedirs(REPORT_FOLDER, exist_ok=True)
+
+app.config['APPLICATION_ROOT'] = '/aio'
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+app.config['REPORT_FOLDER'] = REPORT_FOLDER
+
 
 
 @app.route("/")
 def homepage():
-    routes = []
-    for rule in app.url_map.iter_rules():
-        if "GET" in rule.methods and not rule.rule.startswith("/static"):
-            routes.append({
-                "endpoint": rule.endpoint,
-                "url": rule.rule
-            })
-    return render_template("homepage.html", routes=routes)
+    return render_template("homepage.html")
+
+@app.route('/aio', methods=['GET', 'POST'])
+def aio():
+    return render_template('homepage.html')
+
 
 @app.route("/<name>")
 def user(name ):
@@ -144,6 +150,8 @@ def image_optimizer_route():
                 results = None
 
     return render_template('image_optimizer.html', results=results, error=error)
+
+application = app
 
 
 if __name__=="__main__":

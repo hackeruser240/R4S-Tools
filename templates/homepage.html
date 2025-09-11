@@ -35,9 +35,7 @@
 
     <h3>Module 1 Tools:</h3>
     <ul>
-        {% for route in routes %}
-            <li><a href="{{ route.url }}">{{ route.endpoint }} → {{ route.url }}</a></li>
-        {% endfor %}
+        <a href="{{url_for('seo_analyzer_route')}}">SEO Analyzer</a>
     </ul>
 </body>
 </html>
