@@ -28,8 +28,11 @@ def image_optimizer(image_path, resize_dims=(800, 600), output_format='JPEG', qu
         # Format
         ext = output_format.lower()
         base_name = os.path.splitext(os.path.basename(image_path))[0]
-        os.makedirs("optimized", exist_ok=True)
-        optimized_path = os.path.join("optimized", f"{base_name}_optimized.{ext}")
+        
+        # Save directly to static/
+        static_dir = "static"
+        os.makedirs(static_dir, exist_ok=True)
+        optimized_path = os.path.join(static_dir, f"{base_name}_optimized.{ext}")
 
         # Save with compression
         img.save(optimized_path, format=output_format, optimize=True, quality=quality)

@@ -43,14 +43,6 @@
       <li><strong>Compression Ratio:</strong> {{ results.compression_ratio }}%</li>
       <li><strong>Saved Path:</strong> {{ results.optimized_path }}</li>
     </ul>
-
-    {% if results.optimized_path %}
-      <a href="{{ url_for('static', filename=results.optimized_path.split('static/')[-1]) }}" download>
-        <button>Download Optimized Image</button>
-      </a>
-    {% endif %}
   {% endif %}
-
-
 </body>
 </html>

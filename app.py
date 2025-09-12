@@ -129,7 +129,7 @@ def image_optimizer_route():
         file = request.files.get('image')
         width = request.form.get('width', type=int)
         height = request.form.get('height', type=int)
-        output_format = request.form.get('format') or None
+        output_format = request.form.get('format') or 'JPEG'
         quality = request.form.get('quality', type=int) or None
 
         if file:
