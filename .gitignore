@@ -10,3 +10,6 @@ prompts/
 
 #functions_folder
 functions_folder/__pycache__/
+
+#env:
+aio-env312/
