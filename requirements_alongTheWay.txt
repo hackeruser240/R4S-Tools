@@ -23,4 +23,11 @@ networkx
 Pillow
 
 #performance_audit:
-weasyprint
+#weasyprint
+
+#topic-modeler
+flask
+gensim
+scikit-learn
+sentence-transformers
+numpy
