@@ -1,0 +1,30 @@
+<!-- File: templates/schema_generator.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schema Generator</title>
+</head>
+<body>
+    <h1>Schema Generator</h1>
+    <form method="POST">
+        <label for="text">Enter your content:</label><br>
+        <textarea name="text" rows="10" cols="80"></textarea><br><br>
+
+        <label for="schema_type">Schema Type:</label>
+        <select name="schema_type">
+            <option value="Article">Article</option>
+            <option value="Product">Product</option>
+            <option value="Event">Event</option>
+            <option value="Organization">Organization</option>
+        </select><br><br>
+
+        <input type="submit" value="Generate Schema">
+    </form>
+
+    {% if schema %}
+        <h2>Generated JSON-LD</h2>
+        <pre>{{ schema | tojson(indent=2) }}</pre>
+    {% endif %}
+</body>
+</html>
