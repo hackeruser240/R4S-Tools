@@ -1,0 +1,58 @@
+<!-- brief_generator.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Brief Generator</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        textarea, input[type="number"] { width: 100%; padding: 8px; margin-top: 5px; }
+        input[type="submit"] { padding: 10px 20px; margin-top: 15px; }
+        h2, h3 { margin-top: 30px; }
+        ul { padding-left: 20px; }
+        li { margin-bottom: 10px; }
+        .faq { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>Brief Generator</h1>
+    <form method="POST">
+        <label for="seed_text">Enter topic or seed paragraph:</label><br>
+        <textarea name="seed_text" rows="6" required></textarea><br><br>
+
+        <label for="faq_count">Number of FAQs:</label><br>
+        <input type="number" name="faq_count" value="5" min="1" max="10"><br><br>
+
+        <input type="submit" value="Generate Brief">
+    </form>
+
+    {% if result %}
+        <h2>Generated Outline</h2>
+
+        <h3>H1</h3>
+        <p>{{ result.h1 }}</p>
+
+        <h3>H2 Headings</h3>
+        <ul>
+            {% for h2 in result.h2 %}
+                <li>{{ h2 }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>H3 Headings</h3>
+        <ul>
+            {% for h3 in result.h3 %}
+                <li>{{ h3 }}</li>
+            {% endfor %}
+        </ul>
+
+        <h2>FAQs</h2>
+        {% for faq in result.faqs %}
+            <div class="faq">
+                <strong>Q:</strong> {{ faq.question }}<br>
+                <strong>A:</strong> {{ faq.answer }}
+            </div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

@@ -12,6 +12,8 @@ from functions_folder.schema_generator import generate_schema_ld
 from functions_folder.internal_link_optimizer import suggest_internal_links
 from functions_folder.content_gap_finder import find_content_gaps
 from functions_folder.headline_optimizer import score_headline
+from functions_folder.brief_generator import generate_brief
+
 
 
 
@@ -208,6 +210,15 @@ def headline_optimizer():
         result = score_headline(headline)
     return render_template("headline_optimizer.html", result=result)
 
+
+@app.route("/brief_generator", methods=["GET", "POST"])
+def brief_generator():
+    result = None
+    if request.method == "POST":
+        seed_text = request.form["seed_text"]
+        faq_count = int(request.form.get("faq_count", 5))
+        result = generate_brief(seed_text, faq_count)
+    return render_template("brief_generator.html", result=result)
 
 
 application = app
