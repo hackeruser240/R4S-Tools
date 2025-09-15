@@ -63,4 +63,15 @@
         {% for topic in topics %}
             <div class="topic-block">
                 <p><strong>Topic {{ topic.topic_id }}</strong></p>
-                <p class="keywords">Keywords: {{ topic
+                <p class="keywords">Keywords: {{ topic.keywords | join(', ') }}</p>
+                <p><strong>Associated Texts:</strong></p>
+                <ul>
+                    {% for text in topic.texts %}
+                        <li>{{ text }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endfor %}
+    {% endif %}
+</body>
+</html>

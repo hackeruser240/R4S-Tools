@@ -13,7 +13,8 @@ from functions_folder.internal_link_optimizer import suggest_internal_links
 from functions_folder.content_gap_finder import find_content_gaps
 from functions_folder.headline_optimizer import score_headline
 from functions_folder.brief_generator import generate_brief
-from functions_folder.topic_modeler import model_topics
+from functions_folder.topic_modeler import lda_topic_modeling, bert_topic_modeling
+
 
 
 
@@ -168,16 +169,21 @@ def image_optimizer_route():
 
 @app.route("/topic_modeler", methods=["GET", "POST"])
 def topic_modeler():
-    topics = None
+    topics = []
     if request.method == "POST":
         raw_texts = request.form["texts"]
         method = request.form["method"]
         num_topics = int(request.form.get("num_topics", 3))
 
         texts = [line.strip() for line in raw_texts.strip().split("\n") if line.strip()]
-        topics = model_topics(texts, method=method, num_topics=num_topics)
+
+        if method == "lda":
+            topics, lda_model, corpus, dictionary = lda_topic_modeling(texts, num_topics=num_topics)
+        elif method == "bert":
+            topics, embeddings, labels = bert_topic_modeling(texts, num_clusters=num_topics)
 
     return render_template("topic_modeler.html", topics=topics)
+
 
 
 @app.route("/schema_generator", methods=["GET", "POST"])
