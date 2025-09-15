@@ -31,3 +31,8 @@ gensim
 scikit-learn
 sentence-transformers
 numpy
+matplotlib
+pyldavis
+sentence-transformers
+scikit-learn
+gensim
