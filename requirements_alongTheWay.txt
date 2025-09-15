@@ -45,3 +45,9 @@ gensim
 
 #internal_link_optimizer
 #networkx
+
+#content-gap finder:
+flask
+scikit-learn
+sentence-transformers
+numpy

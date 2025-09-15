@@ -10,6 +10,8 @@ from functions_folder.redirect_mapper import redirect_mapper
 from functions_folder.image_optimizer import image_optimizer
 from functions_folder.schema_generator import generate_schema_ld
 from functions_folder.internal_link_optimizer import suggest_internal_links
+from functions_folder.content_gap_finder import find_content_gaps
+
 
 
 
@@ -186,6 +188,16 @@ def internal_link_optimizer():
         suggestions = suggest_internal_links(pages, links)
 
     return render_template("internal_link_optimizer.html", suggestions=suggestions)
+
+@app.route("/content_gap_finder", methods=["GET", "POST"])
+def content_gap_finder():
+    results = None
+    if request.method == "POST":
+        your_content = request.form["your_content"]
+        competitor_raw = request.form["competitor_content"]
+        competitor_texts = [line.strip() for line in competitor_raw.strip().split("\n") if line.strip()]
+        results = find_content_gaps(your_content, competitor_texts, top_n=10)
+    return render_template("content_gap_finder.html", results=results)
 
 
 
