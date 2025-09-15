@@ -8,6 +8,10 @@ from functions_folder.crawler import crawl_site
 from functions_folder.broken_link_checker import broken_link_checker
 from functions_folder.redirect_mapper import redirect_mapper
 from functions_folder.image_optimizer import image_optimizer
+from functions_folder.schema_generator import generate_schema_ld
+from functions_folder.internal_link_optimizer import suggest_internal_links
+
+
 
 
 import os 
@@ -151,8 +155,40 @@ def image_optimizer_route():
 
     return render_template('image_optimizer.html', results=results, error=error)
 
+#============================================================
+#MODULE 2
+#============================================================
+
+@app.route("/schema_generator", methods=["GET", "POST"])
+def schema_generator():
+    schema = None
+    if request.method == "POST":
+        text = request.form.get("text", "")
+        schema_type = request.form.get("schema_type", "Article")
+        schema = generate_schema_ld(text, schema_type)
+    return render_template("schema_generator.html", schema=schema)
+
+
+@app.route("/internal_link_optimizer", methods=["GET", "POST"])
+def internal_link_optimizer():
+    suggestions = None
+    if request.method == "POST":
+        pages = request.form["pages"].split(",")
+        pages = [p.strip() for p in pages if p.strip()]
+        
+        raw_links = request.form["links"].split(",")
+        links = []
+        for link in raw_links:
+            parts = link.strip().split("-")
+            if len(parts) == 2:
+                links.append((parts[0].strip(), parts[1].strip()))
+        
+        suggestions = suggest_internal_links(pages, links)
+
+    return render_template("internal_link_optimizer.html", suggestions=suggestions)
+
+
+
 application = app
-
-
 if __name__=="__main__":
     app.run(debug=True)

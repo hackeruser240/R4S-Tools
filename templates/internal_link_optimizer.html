@@ -1,0 +1,29 @@
+<!-- internal_link_optimizer.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Internal Link Optimizer</title>
+</head>
+<body>
+    <h1>Internal Link Optimizer</h1>
+    <form method="POST">
+        <label>Pages (comma-separated):</label><br>
+        <input type="text" name="pages"><br><br>
+
+        <label>Links (format: page1-page2, comma-separated):</label><br>
+        <input type="text" name="links"><br><br>
+
+        <input type="submit" value="Optimize Links">
+    </form>
+
+    {% if suggestions %}
+        <h2>Suggested Internal Links</h2>
+        <ul>
+        {% for page, recs in suggestions.items() %}
+            <li><strong>{{ page }}</strong>: {{ recs | join(', ') }}</li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
