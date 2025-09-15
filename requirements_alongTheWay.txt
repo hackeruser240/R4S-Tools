@@ -51,3 +51,9 @@ flask
 scikit-learn
 sentence-transformers
 numpy
+
+#headline optimizer
+flask
+textblob
+transformers
+torch

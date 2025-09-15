@@ -1,0 +1,38 @@
+<!-- headline_optimizer.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Headline Optimizer</title>
+</head>
+<body>
+    <h1>Headline Optimizer</h1>
+    <form method="POST">
+        <label>Enter your headline:</label><br>
+        <input type="text" name="headline" size="80"><br><br>
+        <input type="submit" value="Optimize">
+    </form>
+
+    {% if result %}
+        <h2>Headline Analysis</h2>
+        <p><strong>Original:</strong> {{ result.headline }}</p>
+        <p><strong>Polarity:</strong> {{ result.polarity }}</p>
+        <p><strong>Subjectivity:</strong> {{ result.subjectivity }}</p>
+        <p><strong>Fluency Score:</strong> {{ result.fluency }}</p>
+
+        <h3>Suggestions</h3>
+        <ul>
+            {% for s in result.suggestions %}
+                <li>{{ s }}</li>
+            {% endfor %}
+        </ul>
+
+        <h3>Improved Variants</h3>
+        <ul>
+            {% for v in result.improved_variants %}
+                <li>{{ v }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

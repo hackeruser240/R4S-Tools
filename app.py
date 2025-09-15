@@ -11,6 +11,7 @@ from functions_folder.image_optimizer import image_optimizer
 from functions_folder.schema_generator import generate_schema_ld
 from functions_folder.internal_link_optimizer import suggest_internal_links
 from functions_folder.content_gap_finder import find_content_gaps
+from functions_folder.headline_optimizer import score_headline
 
 
 
@@ -198,6 +199,14 @@ def content_gap_finder():
         competitor_texts = [line.strip() for line in competitor_raw.strip().split("\n") if line.strip()]
         results = find_content_gaps(your_content, competitor_texts, top_n=10)
     return render_template("content_gap_finder.html", results=results)
+
+@app.route("/headline_optimizer", methods=["GET", "POST"])
+def headline_optimizer():
+    result = None
+    if request.method == "POST":
+        headline = request.form["headline"]
+        result = score_headline(headline)
+    return render_template("headline_optimizer.html", result=result)
 
 
 
