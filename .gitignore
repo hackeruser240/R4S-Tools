@@ -1,7 +1,7 @@
 #main folder:
 
 __pycache__/
-aio-env/
+aio-env313/
 audits/
 optimized/
 static/
@@ -13,3 +13,4 @@ functions_folder/__pycache__/
 
 #env:
 aio-env312/
+aio-env311/

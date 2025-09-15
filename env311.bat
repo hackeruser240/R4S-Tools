@@ -1,0 +1,1 @@
+aio-env311\Scripts\activate.bat
