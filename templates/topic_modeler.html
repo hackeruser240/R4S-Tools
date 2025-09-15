@@ -1,0 +1,66 @@
+<!-- topic_modeler.html -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Topic Modeler</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: #f4f4f4;
+        }
+        h1, h2 {
+            color: #333;
+        }
+        textarea, select, input[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            font-size: 16px;
+        }
+        input[type="submit"] {
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .topic-block {
+            background-color: #fff;
+            padding: 15px;
+            margin-top: 20px;
+            border-left: 4px solid #007BFF;
+        }
+        .keywords {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Topic Modeler</h1>
+    <form method="POST">
+        <label for="texts">Enter one text per line:</label>
+        <textarea name="texts" rows="10" required></textarea>
+
+        <label for="method">Choose modeling method:</label>
+        <select name="method">
+            <option value="lda">LDA</option>
+            <option value="bert">BERT</option>
+        </select>
+
+        <label for="num_topics">Number of topics/clusters:</label>
+        <input type="number" name="num_topics" value="3" min="2" max="10">
+
+        <input type="submit" value="Generate Topics">
+    </form>
+
+    {% if topics %}
+        <h2>Detected Topics</h2>
+        {% for topic in topics %}
+            <div class="topic-block">
+                <p><strong>Topic {{ topic.topic_id }}</strong></p>
+                <p class="keywords">Keywords: {{ topic

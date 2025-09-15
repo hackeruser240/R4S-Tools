@@ -13,6 +13,8 @@ from functions_folder.internal_link_optimizer import suggest_internal_links
 from functions_folder.content_gap_finder import find_content_gaps
 from functions_folder.headline_optimizer import score_headline
 from functions_folder.brief_generator import generate_brief
+from functions_folder.topic_modeler import model_topics
+
 
 
 
@@ -163,6 +165,20 @@ def image_optimizer_route():
 #============================================================
 #MODULE 2
 #============================================================
+
+@app.route("/topic_modeler", methods=["GET", "POST"])
+def topic_modeler():
+    topics = None
+    if request.method == "POST":
+        raw_texts = request.form["texts"]
+        method = request.form["method"]
+        num_topics = int(request.form.get("num_topics", 3))
+
+        texts = [line.strip() for line in raw_texts.strip().split("\n") if line.strip()]
+        topics = model_topics(texts, method=method, num_topics=num_topics)
+
+    return render_template("topic_modeler.html", topics=topics)
+
 
 @app.route("/schema_generator", methods=["GET", "POST"])
 def schema_generator():
