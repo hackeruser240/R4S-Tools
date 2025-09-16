@@ -2,15 +2,14 @@
 
 __pycache__/
 aio-env313/
+aio-env312/
+aio-env311/
 audits/
 optimized/
 static/
 uploads/
 prompts/
+old env/
 
 #functions_folder
 functions_folder/__pycache__/
-
-#env:
-aio-env312/
-aio-env311/
