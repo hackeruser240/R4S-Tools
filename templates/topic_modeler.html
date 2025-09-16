@@ -59,6 +59,10 @@
         <input type="submit" value="Generate Topics">
     </form>
 
+    {% if error %}
+        <div style="color: red; font-weight: bold;">{{ error }}</div>
+    {% endif %}
+
     {% if topics %}
         <h2>Detected Topics</h2>
         {% for topic in topics %}

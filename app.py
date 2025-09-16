@@ -1,5 +1,5 @@
 from flask import Flask,request, render_template, send_file
-from functions import *
+#from functions import *
 
 from functions_folder.performance_audit import run_lighthouse_audit
 from functions_folder.content_scorer import content_scorer
@@ -173,6 +173,7 @@ def topic_modeler():
     raw_texts = ""
     method = "lda"
     num_topics = 3
+    error = None
 
     if request.method == "POST":
         raw_texts = request.form["texts"]
@@ -183,10 +184,21 @@ def topic_modeler():
 
         if method == "lda":
             topics, lda_model, corpus, dictionary = lda_topic_modeling(texts, num_topics=num_topics)
-        elif method == "bert":
-            topics, embeddings, labels = bert_topic_modeling(texts, num_clusters=num_topics)
 
-    return render_template("topic_modeler.html", topics=topics, raw_texts=raw_texts, method=method, num_topics=num_topics)
+        elif method == "bert":
+            if len(texts) < num_topics:
+                error = f"You entered {len(texts)} text(s), but requested {num_topics} clusters. Please enter more texts or reduce the number of clusters."
+            else:
+                topics, embeddings, labels = bert_topic_modeling(texts, num_clusters=num_topics)
+
+    return render_template(
+        "topic_modeler.html",
+        topics=topics,
+        raw_texts=raw_texts,
+        method=method,
+        num_topics=num_topics,
+        error=error
+    )
 
 
 

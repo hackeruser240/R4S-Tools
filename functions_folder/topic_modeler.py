@@ -83,7 +83,7 @@ if __name__ == "__main__":
         "Docker troubleshooting in automation pipelines"
     ]
 
-    method = "lda"  # Choose "lda" or "bert"
+    method = "bert"  # Choose "lda" or "bert"
     viz = True       # Toggle visualization
 
     if method == "lda":
