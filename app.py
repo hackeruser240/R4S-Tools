@@ -170,6 +170,10 @@ def image_optimizer_route():
 @app.route("/topic_modeler", methods=["GET", "POST"])
 def topic_modeler():
     topics = []
+    raw_texts = ""
+    method = "lda"
+    num_topics = 3
+
     if request.method == "POST":
         raw_texts = request.form["texts"]
         method = request.form["method"]
@@ -182,7 +186,7 @@ def topic_modeler():
         elif method == "bert":
             topics, embeddings, labels = bert_topic_modeling(texts, num_clusters=num_topics)
 
-    return render_template("topic_modeler.html", topics=topics)
+    return render_template("topic_modeler.html", topics=topics, raw_texts=raw_texts, method=method, num_topics=num_topics)
 
 
 
