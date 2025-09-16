@@ -13,7 +13,7 @@ from functions_folder.internal_link_optimizer import suggest_internal_links
 from functions_folder.content_gap_finder import find_content_gaps
 from functions_folder.headline_optimizer import score_headline
 from functions_folder.brief_generator import generate_brief
-from functions_folder.topic_modeler import lda_topic_modeling, bert_topic_modeling
+from functions_folder.topic_modeler import lda_topic_modeling, bert_topic_modeling, visualize_topics
 
 
 
@@ -174,22 +174,28 @@ def topic_modeler():
     method = "lda"
     num_topics = 3
     error = None
+    show_viz = False
 
     if request.method == "POST":
         raw_texts = request.form["texts"]
         method = request.form["method"]
         num_topics = int(request.form.get("num_topics", 3))
+        show_viz = request.form.get("show_viz") == "yes"
 
         texts = [line.strip() for line in raw_texts.strip().split("\n") if line.strip()]
 
         if method == "lda":
             topics, lda_model, corpus, dictionary = lda_topic_modeling(texts, num_topics=num_topics)
+            if show_viz:
+                visualize_topics("lda", lda_model=lda_model, corpus=corpus, dictionary=dictionary)
 
         elif method == "bert":
             if len(texts) < num_topics:
                 error = f"You entered {len(texts)} text(s), but requested {num_topics} clusters. Please enter more texts or reduce the number of clusters."
             else:
                 topics, embeddings, labels = bert_topic_modeling(texts, num_clusters=num_topics)
+                if show_viz:
+                    visualize_topics("bert", embeddings=embeddings, labels=labels)
 
     return render_template(
         "topic_modeler.html",
@@ -197,7 +203,8 @@ def topic_modeler():
         raw_texts=raw_texts,
         method=method,
         num_topics=num_topics,
-        error=error
+        error=error,
+        show_viz=show_viz
     )
 
 

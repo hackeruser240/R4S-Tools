@@ -60,15 +60,15 @@ def bert_topic_modeling(texts: List[str], num_clusters: Optional[int] = None):
 def visualize_topics(method: str, lda_model=None, corpus=None, dictionary=None, embeddings=None, labels=None):
     if method == "lda":
         vis_data = gensimvis.prepare(lda_model, corpus, dictionary)
-        pyLDAvis.save_html(vis_data, "lda_visualization.html")
+        pyLDAvis.save_html(vis_data, "static/lda_visualization.html")
         print("✅ LDA visualization saved as lda_visualization.html")
     elif method == "bert":
-        tsne = TSNE(n_components=2, perplexity=3, random_state=42)
+        tsne = TSNE(n_components=2, perplexity = max(2, min(30, len(embeddings) - 1)), random_state=42)
         reduced = tsne.fit_transform(embeddings)
         plt.figure(figsize=(8, 6))
         plt.scatter(reduced[:, 0], reduced[:, 1], c=labels, cmap='tab10')
         plt.title("BERT Embedding Clusters")
-        plt.savefig("bert_clusters.png")
+        plt.savefig("static/bert_clusters.png")
         print("✅ BERT cluster plot saved as bert_clusters.png")
 
 # 🧪 Local Test Harness
