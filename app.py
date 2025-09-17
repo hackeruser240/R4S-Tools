@@ -212,11 +212,15 @@ def topic_modeler():
 @app.route("/schema_generator", methods=["GET", "POST"])
 def schema_generator():
     schema = None
+    text = ""
+    schema_type = "Article"
+
     if request.method == "POST":
         text = request.form.get("text", "")
         schema_type = request.form.get("schema_type", "Article")
         schema = generate_schema_ld(text, schema_type)
-    return render_template("schema_generator.html", schema=schema)
+
+    return render_template("schema_generator.html", schema=schema, text=text, schema_type=schema_type)
 
 
 @app.route("/internal_link_optimizer", methods=["GET", "POST"])
