@@ -261,7 +261,7 @@ def brief_generator():
 def internal_link_optimizer():
     suggestions = []
     url_input = ""
-    max_links_input = "10"
+    max_links_input = "8"
 
     if request.method == "POST":
         url_input = request.form.get("url", "").strip()
@@ -273,16 +273,19 @@ def internal_link_optimizer():
             max_links = 10  # fallback if input is invalid
 
         if url_input:
-            slugs = extract_internal_links(url_input, max_links=max_links)
-            result = suggest_internal_links(slugs, top_n=3)
-            for i, (page, recs) in enumerate(result.items(), start=1):
-                suggestions.append({
-                    "index": i,
-                    "source": page,
-                    "targets": recs
-                })
+            print(f"🔍 Crawling homepage: {url_input}")
+            slugs, error = extract_internal_links(url_input, max_links=max_links)
+            if not error and slugs:
+                suggestions = suggest_internal_links(slugs, url_input, top_n=3)
 
-    return render_template("internal_link_optimizer.html", suggestions=suggestions, url_input=url_input, max_links_input=max_links_input)
+    return render_template(
+        "internal_link_optimizer.html",
+        suggestions=suggestions,
+        url_input=url_input,
+        max_links_input=max_links_input
+    )
+
+
 
 application = app
 if __name__=="__main__":
