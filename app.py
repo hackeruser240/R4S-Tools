@@ -257,10 +257,11 @@ def content_gap_finder():
 @app.route("/headline_optimizer", methods=["GET", "POST"])
 def headline_optimizer():
     result = None
+    headline=""
     if request.method == "POST":
         headline = request.form["headline"]
         result = score_headline(headline)
-    return render_template("headline_optimizer.html", result=result)
+    return render_template("headline_optimizer.html", result=result, headline=headline)
 
 
 @app.route("/brief_generator", methods=["GET", "POST"])
