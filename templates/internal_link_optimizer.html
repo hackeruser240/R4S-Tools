@@ -4,26 +4,38 @@
 <html>
 <head>
     <title>Internal Link Optimizer</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #333; }
+        .suggestion { margin-bottom: 20px; padding: 10px; border-left: 4px solid #0077cc; background: #f9f9f9; }
+        .targets { margin-left: 20px; }
+    </style>
 </head>
 <body>
     <h1>Internal Link Optimizer</h1>
     <form method="POST">
-        <label>Pages (comma-separated):</label><br>
-        <input type="text" name="pages"><br><br>
-
-        <label>Links (format: page1-page2, comma-separated):</label><br>
-        <input type="text" name="links"><br><br>
-
-        <input type="submit" value="Optimize Links">
+        <label for="url">Enter Root URL:</label><br>
+        <input type="text" id="url" name="url" value="{{ url_input }}" size="60" required>
+        <br><br>
+        <label for="max_links">Number of Internal links to scan:</label><br>
+        <input type="number" id="max_links" name="max_links" value="{{ max_links_input }}" min="1" max="100">
+        <br><br>
+        <button type="submit">Generate Suggestions</button>
     </form>
 
     {% if suggestions %}
-        <h2>Suggested Internal Links</h2>
-        <ul>
-        {% for page, recs in suggestions.items() %}
-            <li><strong>{{ page }}</strong>: {{ recs | join(', ') }}</li>
+        <h2>📌 Suggested Internal Linking Strategy:</h2>
+        {% for item in suggestions %}
+            <div class="suggestion">
+                <strong>Suggestion {{ item.index }}:</strong><br>
+                The page <strong>{{ item.source }}</strong> should add internal links to the following pages:
+                <ul class="targets">
+                    {% for target in item.targets %}
+                        <li>{{ target }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
         {% endfor %}
-        </ul>
     {% endif %}
 </body>
 </html>

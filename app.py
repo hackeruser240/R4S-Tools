@@ -14,7 +14,7 @@ from functions_folder.content_gap_finder import find_content_gaps
 from functions_folder.headline_optimizer import score_headline
 from functions_folder.brief_generator import generate_brief
 from functions_folder.topic_modeler import lda_topic_modeling, bert_topic_modeling, visualize_topics
-
+from functions_folder.internal_link_optimizer import extract_internal_links, suggest_internal_links
 
 
 
@@ -223,23 +223,6 @@ def schema_generator():
     return render_template("schema_generator.html", schema=schema, text=text, schema_type=schema_type)
 
 
-@app.route("/internal_link_optimizer", methods=["GET", "POST"])
-def internal_link_optimizer():
-    suggestions = None
-    if request.method == "POST":
-        pages = request.form["pages"].split(",")
-        pages = [p.strip() for p in pages if p.strip()]
-        
-        raw_links = request.form["links"].split(",")
-        links = []
-        for link in raw_links:
-            parts = link.strip().split("-")
-            if len(parts) == 2:
-                links.append((parts[0].strip(), parts[1].strip()))
-        
-        suggestions = suggest_internal_links(pages, links)
-
-    return render_template("internal_link_optimizer.html", suggestions=suggestions)
 
 @app.route("/content_gap_finder", methods=["GET", "POST"])
 def content_gap_finder():
@@ -273,6 +256,33 @@ def brief_generator():
         result = generate_brief(seed_text, faq_count)
     return render_template("brief_generator.html", result=result)
 
+
+@app.route("/internal_link_optimizer", methods=["GET", "POST"])
+def internal_link_optimizer():
+    suggestions = []
+    url_input = ""
+    max_links_input = "10"
+
+    if request.method == "POST":
+        url_input = request.form.get("url", "").strip()
+        max_links_input = request.form.get("max_links", "10").strip()
+
+        try:
+            max_links = int(max_links_input)
+        except ValueError:
+            max_links = 10  # fallback if input is invalid
+
+        if url_input:
+            slugs = extract_internal_links(url_input, max_links=max_links)
+            result = suggest_internal_links(slugs, top_n=3)
+            for i, (page, recs) in enumerate(result.items(), start=1):
+                suggestions.append({
+                    "index": i,
+                    "source": page,
+                    "targets": recs
+                })
+
+    return render_template("internal_link_optimizer.html", suggestions=suggestions, url_input=url_input, max_links_input=max_links_input)
 
 application = app
 if __name__=="__main__":

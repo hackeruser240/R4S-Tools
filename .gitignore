@@ -10,6 +10,8 @@ static/
 uploads/
 prompts/
 old env/
+functions_folder/*.txt
+templates/*.txt
 
 #functions_folder
 functions_folder/__pycache__/
