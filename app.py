@@ -244,12 +244,15 @@ def internal_link_optimizer():
 @app.route("/content_gap_finder", methods=["GET", "POST"])
 def content_gap_finder():
     results = None
+    your_content=""
+    competitor_raw=""
+
     if request.method == "POST":
         your_content = request.form["your_content"]
         competitor_raw = request.form["competitor_content"]
         competitor_texts = [line.strip() for line in competitor_raw.strip().split("\n") if line.strip()]
         results = find_content_gaps(your_content, competitor_texts, top_n=10)
-    return render_template("content_gap_finder.html", results=results)
+    return render_template("content_gap_finder.html", results=results, your_content=your_content, competitor_raw=competitor_raw)
 
 @app.route("/headline_optimizer", methods=["GET", "POST"])
 def headline_optimizer():

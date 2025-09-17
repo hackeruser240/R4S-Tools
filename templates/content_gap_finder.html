@@ -9,10 +9,10 @@
     <h1>Content Gap Finder</h1>
     <form method="POST">
         <label>Your Content:</label><br>
-        <textarea name="your_content" rows="6" cols="80"></textarea><br><br>
+        <textarea name="your_content" rows="6" cols="80">{{your_content}}</textarea><br><br>
 
         <label>Competitor Content (one per line):</label><br>
-        <textarea name="competitor_content" rows="6" cols="80"></textarea><br><br>
+        <textarea name="competitor_content" rows="6" cols="80">{{competitor_raw}}</textarea><br><br>
 
         <input type="submit" value="Find Gaps">
     </form>
