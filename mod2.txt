@@ -63,3 +63,10 @@ flask
 scikit-learn
 transformers
 torch
+
+#serp scraper
+Flask
+requests
+beautifulsoup4
+lxml
+fake-useragent
