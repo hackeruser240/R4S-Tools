@@ -226,16 +226,29 @@ def schema_generator():
 
 @app.route("/content_gap_finder", methods=["GET", "POST"])
 def content_gap_finder():
-    results = None
-    your_content=""
-    competitor_raw=""
+    results = []
+    your_content = ""
+    competitor_raw = ""
 
     if request.method == "POST":
-        your_content = request.form["your_content"]
-        competitor_raw = request.form["competitor_content"]
-        competitor_texts = [line.strip() for line in competitor_raw.strip().split("\n") if line.strip()]
-        results = find_content_gaps(your_content, competitor_texts, top_n=10)
-    return render_template("content_gap_finder.html", results=results, your_content=your_content, competitor_raw=competitor_raw)
+        your_content = request.form.get("your_content", "").strip()
+        competitor_raw = request.form.get("competitor_content", "").strip()
+        competitor_texts = [line.strip() for line in competitor_raw.split("\n") if line.strip()]
+
+        print("Your content:", your_content)
+        print("Competitor lines:", competitor_texts)
+
+        try:
+            results = find_content_gaps(your_content, competitor_texts, top_n=10)
+            print("RESULTS:", results)
+        except Exception as e:
+            print("Error in content gap finder:", e)
+            results = []
+    print("Sending to template:", results)
+    return render_template("content_gap_finder.html",
+                           results=results,
+                           your_content=your_content,
+                           competitor_raw=competitor_raw)
 
 @app.route("/headline_optimizer", methods=["GET", "POST"])
 def headline_optimizer():

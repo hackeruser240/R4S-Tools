@@ -17,18 +17,23 @@
         <input type="submit" value="Find Gaps">
     </form>
 
-    {% if results %}
-        <h2>Top Missing Topics</h2>
-        <table border="1">
-            <tr><th>Term</th><th>TF-IDF Gap</th><th>Semantic Similarity</th></tr>
-            {% for item in results %}
-                <tr>
-                    <td>{{ item.term }}</td>
-                    <td>{{ item.tfidf_score }}</td>
-                    <td>{{ item.semantic_score }}</td>
-                </tr>
-            {% endfor %}
-        </table>
+    {% if request.method == 'POST' %}
+        {% if results %}
+            <h2>Top Missing Topics</h2>
+            <table border="1">
+                <tr><th>Term</th><th>TF-IDF Gap</th><th>Semantic Similarity</th></tr>
+                {% for item in results %}
+                    <tr>
+                        <td>{{ item.term }}</td>
+                        <td>{{ item.tfidf_score }}</td>
+                        <td>{{ item.semantic_score }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No gaps found. Try expanding your competitor content or adjusting your input.</p>
+        {% endif %}
     {% endif %}
+    
 </body>
 </html>
