@@ -77,6 +77,8 @@ def scrape_serp(keyword, num_results=10):
         title_text = h2_tag.get_text(strip=True) if h2_tag else None
         url = link_tag.get("href") if link_tag else None
         snippet_text = snippet_tag.get_text(strip=True) if snippet_tag else ""
+        snippet_text = snippet_text.encode().decode('unicode_escape')
+
 
         # Filter out junk titles (e.g. domain names mashed with URLs)
         if title_text and url and not any(domain in title_text.lower() for domain in ["https://", ".com", ".net", ".org"]):
