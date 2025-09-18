@@ -12,15 +12,12 @@ import re
 # Setup dual-handler logger
 logger = logging.getLogger("SERPLogger")
 logger.setLevel(logging.INFO)
-
 # File handler (overwrite mode)
 file_handler = logging.FileHandler("results.txt", mode="w", encoding="utf-8")
 file_handler.setLevel(logging.INFO)
-
 # Console handler
 console_handler = logging.StreamHandler()
 console_handler.setLevel(logging.INFO)
-
 # Formatter
 file_formatter = logging.Formatter('%(asctime)s - %(levelname)s - %(message)s', datefmt='%d-%b-%Y %I:%M %p'
 )
@@ -28,10 +25,43 @@ console_formatter = logging.Formatter('%(asctime)s - %(message)s', datefmt='%d-%
 )
 file_handler.setFormatter(file_formatter)
 console_handler.setFormatter(console_formatter)
-
 # Attach handlers
 logger.addHandler(file_handler)
 logger.addHandler(console_handler)
+
+def get_company_input():
+    user_input = input("Enter a company name or URL to match: ").strip()
+    
+    if not user_input or user_input.isdigit():
+        logger.error("Invalid input. Please enter a valid company name or URL.")
+        return None
+    
+    return user_input
+
+def find_match(results, query):
+    query_lower = query.lower()
+    is_url = "." in query_lower and "/" in query_lower  # crude URL check
+
+    matches = []
+
+    for idx, entry in enumerate(results):
+        title = entry.get("title", "").lower()
+        url = entry.get("url", "").lower()
+
+        if is_url:
+            if query_lower in url:
+                matches.append((idx, entry))
+        else:
+            if query_lower in title or query_lower in url:
+                matches.append((idx, entry))
+
+    if matches:
+        logger.info(f"✅ Match found for '{query}':")
+        for i, match in matches:
+            logger.info(f"The company ranked: {i+1}!")
+            logger.info(json.dumps(match, indent=2))
+    else:
+        logger.info(f"❌ No match found for '{query}'.")
 
 def scrape_serp(keyword, num_results=10):
     ua = UserAgent()
@@ -94,11 +124,17 @@ def scrape_serp(keyword, num_results=10):
     time.sleep(random.uniform(1.5, 3.0))  # Anti-bot delay
     return results
 
+
 if __name__ == "__main__":
-    keyword = input("Enter keyword to scrape: ")
+    keyword = input("Enter keyword to scrape: ").strip()
+    company_query = get_company_input()
+
     logger.info(f"Keyword: {keyword}")
+    logger.info(f"Company to search for: {company_query}")    
+    
     results = scrape_serp(keyword)
-    logger.info(f"number of search results: {len(results)}")
+    logger.info(f"Number of search results: {len(results)}")
     logger.info(json.dumps(results, indent=2))
 
-# Enter keyword to scrape: seo company
+    if company_query:
+        find_match(results, company_query)
