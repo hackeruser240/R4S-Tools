@@ -96,6 +96,7 @@ def scrape_serp(keyword, num_results=10):
 
 if __name__ == "__main__":
     keyword = input("Enter keyword to scrape: ")
+    logger.info(f"Keyword: {keyword}")
     results = scrape_serp(keyword)
     logger.info(f"number of search results: {len(results)}")
     logger.info(json.dumps(results, indent=2))

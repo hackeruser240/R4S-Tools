@@ -1,169 +1,20 @@
-19-Sep-2025 12:20 AM - INFO - Found 37 result blocks
-19-Sep-2025 12:20 AM - INFO - number of search results: 33
-19-Sep-2025 12:20 AM - INFO - [
+19-Sep-2025 12:41 AM - INFO - Keyword: seo tools
+19-Sep-2025 12:41 AM - INFO - Found 5 result blocks
+19-Sep-2025 12:41 AM - INFO - number of search results: 3
+19-Sep-2025 12:41 AM - INFO - [
   {
-    "title": "10 BestSEOServices \u2013 Forbes Advisor",
-    "url": "https://www.bing.com/ck/a?!&&p=b33ffe52746255bf6af295d4aa4e5b6cea5658c981361c9b4d9a11ae5724318fJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuZm9yYmVzLmNvbS9hZHZpc29yL2J1c2luZXNzL3NvZnR3YXJlL2Jlc3Qtc2VvLXNlcnZpY2VzLw&ntb=1",
-    "snippet": "Here are the best SEO services today. Forbes Advisor selected these companies based on pricing, results, and specializations like local or e-commerce SEO services."
+    "title": "FreeSEO Tools- Made byAhrefs",
+    "url": "https://ahrefs.com/free-seo-tools",
+    "snippet": "Get more traffic with Ahrefs free SEO tools: Webmaster Tools, Keyword Generator, Backlink Checker, SEO Toolbar, and more."
   },
   {
-    "title": "The 10 BestSEOAgencies in Chittagong - 2025 Reviews - Sortlist",
-    "url": "https://www.bing.com/ck/a?!&&p=f0fa8b25c81f0412d50e540d7d712cead838fc7751d60f72a22b3824da0014c8JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuc29ydGxpc3QuY29tL3Nlby9jaGl0dGFnb25nLWNoaXR0YWdvbmctZGl2aXNpb24tYmQ&ntb=1",
-    "snippet": "Sep 4, 2025 Find & hire the best SEO Agencies in Chittagong. Here are the best ones listed just for you based on verified client reviews."
+    "title": "12 BestSEO Toolsfor August 2025 (Used by Our Team Daily) - Backlinko",
+    "url": "https://backlinko.com/best-free-seo-tools",
+    "snippet": "Aug 21, 2025 Discover the 12 best SEO tools we actually use to drive 867K+ sessions/month  plus alternatives, bonus picks, & how to use "
   },
   {
-    "title": "TopSEOAgencies - Sep 2025 Rankings | DesignRush",
-    "url": "https://www.bing.com/ck/a?!&&p=ec84de5739c2dbfa5eeb99ccb4d4ae0c74281ce3f347b6cc30b91492930ff857JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuZGVzaWducnVzaC5jb20vYWdlbmN5L3NlYXJjaC1lbmdpbmUtb3B0aW1pemF0aW9u&ntb=1",
-    "snippet": "Sep 11, 2025 Weve thoroughly researched the top SEO companies, by evaluating their service offerings, client testimonials, industry reputation, and pricing structure to compile a list of the "
-  },
-  {
-    "title": "BestSEO& Digital Marketing Agency in Chittagong | Avista D",
-    "url": "https://www.bing.com/ck/a?!&&p=21bfa9c5f4bbe350e0fe94ef24f686680839ec0448c3d638a0e96c2fab73303dJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly9hdmlzdGFzZW8uY29tL2RpZ2l0YWwtbWFya2V0aW5nLWFnZW5jeS1pbi1jaGF0dG9ncmFtLw&ntb=1",
-    "snippet": "May 16, 2024 Get the best quality SEO, Web Design and Digital marketing services from the top Digital Marketing Agency in Chittagong - Avista Digital!"
-  },
-  {
-    "title": "BestSEO Companiesin 2025 (+ How to Choose anSEO\u2026",
-    "url": "https://www.bing.com/ck/a?!&&p=da5d39297b27d00fb46e250bde72d475ca7774bdf73d4ccb7ad2ec6a4c71faf9JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cud2ViZnguY29tL3Nlby9sZWFybi9iZXN0LXNlby1jb21wYW5pZXMv&ntb=1",
-    "snippet": "Explore the top SEO companies that can help you manage your search engine optimization campaigns and drive business growth this 2025. Check out our list of reputable agencies and "
-  },
-  {
-    "title": "TopSEO Companiesin the USA 2025 \u2013 Ranked & Reviewed",
-    "url": "https://www.bing.com/ck/a?!&&p=ede307290566a005c4a081d31456a5d0d2a63c33f9958ae03bd61328b57c44a1JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly9vbmVsaXR0bGV3ZWIuY29tL3RvcC1hZ2VuY2llcy90b3Atc2VvLWNvbXBhbmllcy8&ntb=1",
-    "snippet": "Jun 24, 2025 Looking for the top SEO company in 2025? Explore data-driven rankings of the best SEO agencies delivering real results in search visibility and ROI."
-  },
-  {
-    "title": "TopSEO Companies& Services - Sep 2025 Rankings - Clutch.co",
-    "url": "https://www.bing.com/ck/a?!&&p=ef536d3db3c54632eb13641e62bf9780efc75f7b4b536c0d86c7f939dd5e22cfJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly9jbHV0Y2guY28vc2VvLWZpcm1z&ntb=1",
-    "snippet": "SEO companies help businesses improve their visibility in search engines like Google through tactics such as keyword research, on-page optimization, link building, technical audits, and "
-  },
-  {
-    "title": "The 10 TopSEO Companies and Services in2025 (Result Oriented)",
-    "url": "https://www.bing.com/ck/a?!&&p=988b7f8a2700ec7be29f0768f8db573b395f9ddfa0beb8f1d980f387b1346e70JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuc29mdHdhcmV0ZXN0aW5naGVscC5jb20vYmVzdC1zZW8tY29tcGFuaWVzLw&ntb=1",
-    "snippet": "Sep 10, 2025 Detailed review and ranking of the Best SEO Companies. Select the professional SEO Service Provider for your Digital Marketing needs."
-  },
-  {
-    "title": "TopSEO Companies2025 | Compare Reviews on Capterra",
-    "url": "https://www.bing.com/ck/a?!&&p=867e8bfd975e4e8dceaf9d699fd6c12ada1bc2fe96ef31b2b4b9c5f5c45d6689JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuY2FwdGVycmEuY29tL3NlcnZpY2VzL3Nlby8&ntb=1",
-    "snippet": "Oct 7, 2024 Find the top SEO companies on Capterra. Quickly browse through hundreds of SEO companies and narrow down your top choices."
-  },
-  {
-    "title": "Top 30SEO Companies- September 2025 Reviews",
-    "url": "https://www.bing.com/ck/a?!&&p=75b11f681da0219dc70f455145c4e6b48c777f41e0e06c764b676798916de8d6JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly91cGNpdHkuY29tL3Nlbw&ntb=1",
-    "snippet": "3 days ago Browse the top-rated search engine optimization (SEO) companies in the United States and boost your keyword rankings while driving more organic traffic to your website."
-  },
-  {
-    "title": "The 14 BestSEOServices: Handpicked and Reviewed",
-    "url": "https://www.bing.com/ck/a?!&&p=92b5737f0bd0fafb89b0e36a643d66c5ad11d7a7d1e9ebc6c1fe0d82df9a803bJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuc2llZ2VtZWRpYS5jb20vc3RyYXRlZ3kvYmVzdC1zZW8tc2VydmljZXM&ntb=1",
-    "snippet": "Jun 12, 2025 Weve curated a list of the best SEO companies to help you improve your ranking performance, get found, and stay ahead. Read the full list to find the right fit for your strategy."
-  },
-  {
-    "title": "BestSEO Companiesof 2025 | Independent Testing and Trusted \u2026",
-    "url": "https://www.bing.com/ck/a?!&&p=0e19f6523874a60400de0d1cd89b9ebf652a4a61137ececdcc1dd1a8355e77e8JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly9iZXN0c2VvY29tcGFuaWVzLm9yZy8&ntb=1",
-    "snippet": "Uncover the world's leading SEO firms ranked for your business success. Empowering businesses to make data-driven decisions with transparent SEO agency rankings."
-  },
-  {
-    "title": "Top 6SEO Companiesof 2025 \u2013 Plerdy",
-    "url": "https://www.bing.com/ck/a?!&&p=480a75d8d3420ac5ecefdabb386886e014382ffd66b6b9a900dfe202d4bebe90JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cucGxlcmR5LmNvbS9ibG9nL3RvcC1zZW8tYWdlbmNpZXMtdXMv&ntb=1",
-    "snippet": "Jul 9, 2025 Choosing the right SEO company can feel like picking a needle out of a haystack. You scroll through tons of options, they all promise to get you to page one of Google. But "
-  },
-  {
-    "title": "The 15 BestSEO Companies+ Services in the US 2025",
-    "url": "https://www.bing.com/ck/a?!&&p=4349a92c553a7638c9cd23999b7e6884cb7fb7e8907b2bfc7c775f50d0d42f2aJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuc2VhcmNoYmxvb20uY29tL2Jsb2cvYmVzdC1zZW8tY29tcGFuaWVzLXNlcnZpY2VzLw&ntb=1",
-    "snippet": "Jul 3, 2025 Looking for the best SEO companies in the US to maximize your online presence? Here are the top 15 SEO firms in 2025, known for delivering outstanding results."
-  },
-  {
-    "title": "BestSEO Companies| Rankings of the TopSEOFirms of 2025",
-    "url": "https://www.bing.com/ck/a?!&&p=b9c090d9556b7895a4a65eeabc1ae55db9131245d6a2b9841ae874c71b3e6c06JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuYmVzdHNlb2NvbXBhbmllcy5jb20v&ntb=1",
-    "snippet": "View our rankings of the best SEO companies of 2025 and find the search engine optimization firm right for you. We assign a rating to each SEO company."
-  },
-  {
-    "title": "AISEOServices - Rank in AI with Coalition Technologies",
-    "url": "https://www.bing.com/ck/a?!&&p=e072a98a9ffa516909891e972b2b0033e19e5607fa5f6553bdc57897ab431a84JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly9jb2FsaXRpb250ZWNobm9sb2dpZXMuY29tL2FpLXNlby1jb21wYW55&ntb=1",
-    "snippet": "Proprietary SEO Tools We have built proprietary tools to give your business the winning edge. Collaborate with Coalition, an AI SEO company that specializes in SEO for ChatGPT and "
-  },
-  {
-    "title": "Top 10SEO Companiesin the USA for 2025 | BestSEO\u2026",
-    "url": "https://www.bing.com/ck/a?!&&p=9bd4fdf6ec01629575802cea397df7188b9b5b89b21f83cd30b39d1c55f8da6fJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuaGVsbG9yb2tldHRvLmNvbS9hcnRpY2xlcy9zZW8tY29tcGFueS11c2E&ntb=1",
-    "snippet": "That's why we've done the heavy lifting (and the Googling) to bring you the Top 10 SEO Companies in the USA that are absolutely crushing it this year. Whether you're a scrappy "
-  },
-  {
-    "title": "Top 10SEO Companiesin 2025: Detailed Comparison",
-    "url": "https://www.bing.com/ck/a?!&&p=1822525f9fcb951a4e9e0b0d25c0e5dc8c90e42ee1275ee22c5b184bf5a0ed6fJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly9zZW9wcm9meS5jb20vYmxvZy90b3Atc2VvLWNvbXBhbmllcy8&ntb=1",
-    "snippet": "Jun 27, 2025 Explore the best SEO companies by industry. Compare expertise, reviews, and services to help you choose the right SEO partner in 2025."
-  },
-  {
-    "title": "11 USSEO CompaniesThat Don\u2019t Just Talk The Talk (2025)",
-    "url": "https://www.bing.com/ck/a?!&&p=a52bc70b39bd98ed8988fe852c52f1a7acd4f27a4720def7bd3e3f59f02590adJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly9za2FsZS5zby9hZ2VuY2llcy91cy1zZW8v&ntb=1",
-    "snippet": "Jun 16, 2025 Weve rounded up 11 of the best SEO companies in the US to guide you towards those that can help your business grow. Short on time? Take a look at the table below to find "
-  },
-  {
-    "title": "AttractaSEOTools & ManagedSEOServices",
-    "url": "https://www.bing.com/ck/a?!&&p=f6e32def4b60a2f0852cd42decd60b5f5e6a920dadbb0b2df02419736867e5c9JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuYXR0cmFjdGEuY29tLw&ntb=1",
-    "snippet": "Attracta is the worlds most popular SEO company With over 5 million websites using Attractas SEO services, we are by far the worlds largest Search Engine Optimization (SEO) service. "
-  },
-  {
-    "title": "Independent Review Agency |SEO Companies& PPC Agencies",
-    "url": "https://www.bing.com/ck/a?!&&p=a15a0a4216c7851ddee41f8b850aa7e1653e409375171eeadfb555ab541a06abJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cDovL3d3dy5ncmVhdGFnZW5jaWVzLmNvbS8&ntb=1",
-    "snippet": "Great Agencies independently compares and reviews the best SEO companies, PPC agencies and Tech vendors."
-  },
-  {
-    "title": "20 Best EnterpriseSEO Companies(2025) | TheSEOWorks",
-    "url": "https://www.bing.com/ck/a?!&&p=536d0f7683c714bdfc74f02366ba5cc23686117c65cdf1a6e58dcb4976b7d83cJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuc2Vvd29ya3MuY29tL2xpc3RzL3RoZS0yMC1iZXN0LWVudGVycHJpc2Utc2VvLWNvbXBhbmllcy8&ntb=1",
-    "snippet": "Enterprise SEO is a critical part of digital growth for large businesses. It helps companies with complex websites and wide audiences gain visibility in search results. This involves more than "
-  },
-  {
-    "title": "Top 15SEOAgencies in USA to Boost Your Online Growth in 2025",
-    "url": "https://www.bing.com/ck/a?!&&p=fbe15f3e43c2f33af9bca0124a421687038f79e4839279fa030b20054ec5949bJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly9yYW5rZXhkaWdpdGFsLmNvbS90b3Atc2VvLWFnZW5jaWVzLWluLXVzYS8&ntb=1",
-    "snippet": "Sep 5, 2025 Thats why partnering with the right SEO agency in USA can transform your online presence. This list highlights the top SEO agencies in USA for 2025. Each agency has a "
-  },
-  {
-    "title": "TopSEO Companiesin the USA for 2025",
-    "url": "https://www.bing.com/ck/a?!&&p=e4501d677e6f05735f90171d3361be405a85c7d71232b2cd43572a206483fa10JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuYmVzdHNlb2NvbXBhbmllcy5jb20vdG9wLTUwLXNlby1jb21wYW55LXJhbmtpbmdzLw&ntb=1",
-    "snippet": "The following is our complete list of the top SEO company rankings in the United States. We have evaluated several hundred SEO firms for the list, but have narrowed it down to the top 50 SEO "
-  },
-  {
-    "title": "15 Digital Marketing Agencies Trusted by F500 & Growing Firms",
-    "url": "https://www.bing.com/ck/a?!&&p=ade7ccdcae060a4a3d7de562f5a929d6cc33bdfc84436f46c8f0ae21c6f3bc23JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly9uZWFsc2NoYWZmZXIuY29tL2RpZ2l0YWwtbWFya2V0aW5nLWFnZW5jaWVzLw&ntb=1",
-    "snippet": "Sep 8, 2025 Find the best digital marketing agencies that truly deliver results. Explore my top 15 vetted agencies with proven track records."
-  },
-  {
-    "title": "The Best B2BSEO Companies(2025) | TheSEOWorks",
-    "url": "https://www.bing.com/ck/a?!&&p=6816856e23f8e926902e404d1805ee9c717cc7a941f6997cfae94b083a46153cJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuc2Vvd29ya3MuY29tL2xpc3RzL3RoZS1iZXN0LWIyYi1zZW8tY29tcGFuaWVzLw&ntb=1",
-    "snippet": "B2B SEO agencies help companies build visibility in such environments by focusing on quality leads, decisionmaker intent and longerterm digital authority."
-  },
-  {
-    "title": "Why GEO is the newSEO\u2014and how to do it - FastCompany",
-    "url": "https://www.bing.com/ck/a?!&&p=0a86c01ea5191bd09ef6434a429197e91bd61b82a0fb83ff97b543bc0be022f0JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuZmFzdGNvbXBhbnkuY29tLzkxNDAxODMwL2dlby1uZXctc2VvLWV2ZXJ5dGhpbmcteW91LW5lZWQtdG8ta25vdw&ntb=1",
-    "snippet": "2 days ago What you need to know to do Generative Engine Optimization (GEO) and why its essential to start right now."
-  },
-  {
-    "title": "Search engine optimization- Wikipedia",
-    "url": "https://www.bing.com/ck/a?!&&p=2f04eee46fd41afd0c2ac831369e029f8bfbad099bd5647a9c7140a3af476d55JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly9lbi53aWtpcGVkaWEub3JnL3dpa2kvU2VhcmNoX2VuZ2luZV9vcHRpbWl6YXRpb24&ntb=1",
-    "snippet": "Search engine optimization (SEO) is the process of improving the quality and quantity of website traffic to a website or a web page from search engines. [1][2] SEO targets unpaid search traffic "
-  },
-  {
-    "title": "The 10 Best Website DesignCompaniesFor Small Businesses in \u2026",
-    "url": "https://www.bing.com/ck/a?!&&p=c4c82446e933ff4b49a29800707034be722dc7396f62f3ebcc787d4dd47c8eb5JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cudGhlZWRpZ2l0YWwuY29tL2Jsb2cvMTAtYmVzdC13ZWItZGVzaWduLWNvbXBhbmllcy1mb3Itc21hbGwtYnVzaW5lc3Nlcw&ntb=1",
-    "snippet": "Sep 8, 2025 Discover the top 10 website design agencies for small businesses in 2025, specializing in WordPress, ecommerce, SEO, and PPC to boost your online growth."
-  },
-  {
-    "title": "Best AISEOAgencies in 2025: Transform Your Search Strategy \u2026",
-    "url": "https://www.bing.com/ck/a?!&&p=4c5de56973133b884600ff8f05da8773951a03adaa824898b76d904ce45feec6JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cubG9vcGV4ZGlnaXRhbC5jb20vYmxvZy9haS1zZW8tYWdlbmN5&ntb=1",
-    "snippet": "Sep 2, 2025 Discover the 7 best AI SEO agencies in 2025 that transform your search strategy with AI-powered optimization!"
-  },
-  {
-    "title": "7SEOTrends & Predictions for the Rest of 2025 - WordStream",
-    "url": "https://www.bing.com/ck/a?!&&p=bf5eabdfa948683c81a9e172e02caed6de5146ee5bc65ed0ad10d064494573d4JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cud29yZHN0cmVhbS5jb20vYmxvZy9zZW8tdHJlbmRzLWFuZC1wcmVkaWN0aW9ucy1yZXN0LW9mLTIwMjU&ntb=1",
-    "snippet": "Aug 14, 2025 SEO is changing rapidly. Here are the SEO trends and predictions you need to know to drive success through 2025 and into 2026."
-  },
-  {
-    "title": "Ask AnSEO: The Metrics That Matter For Content Strategies",
-    "url": "https://www.bing.com/ck/a?!&&p=65fbe1fe86fab459b2c26483f25a188d52aecd5e44bdcef001e169502855bd69JmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93d3cuc2VhcmNoZW5naW5lam91cm5hbC5jb20vYXNrLWFuLXNlby10aGUtbWV0cmljcy10aGF0LW1hdHRlci1mb3ItY29udGVudC1zdHJhdGVnaWVzLzU0NzQzOC8&ntb=1",
-    "snippet": "Aug 12, 2025 Ask An SEO: The Metrics That Matter For Content Strategies Which content metrics actually drive growth? Heres how to align KPIs with business goals, from email opt-ins "
-  },
-  {
-    "title": "Orlando SEOServices | 91% Client Retention Rate | WebFX",
-    "url": "https://www.bing.com/ck/a?!&&p=9676b7d000e8ef839a2a6e73150f35a31d62d7b8a0664f314171260c95c6268eJmltdHM9MTc1ODE1MzYwMA&ptn=3&ver=2&hsh=4&fclid=2d18a1be-1984-6979-3513-b7d5184c68e8&u=a1aHR0cHM6Ly93ZWJmeC5jb20vbG9jYXRpb25zL29ybGFuZG8tZmwvc2VvLw&ntb=1",
-    "snippet": "WebFX is a trusted Orlando SEO company, offering Orlando SEO services that include local, traditional, ecommerce, and enterprise SEO."
+    "title": "The 29 Best FreeSEO Toolsfor 2025 - Semrush",
+    "url": "https://www.semrush.com/blog/free-seo-tools/",
+    "snippet": "Aug 12, 2024 The best free SEO tools for 2025 include Keyword Magic Tool, Position Tracking, and Google Analytics 4."
   }
 ]
