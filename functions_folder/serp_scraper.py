@@ -99,3 +99,5 @@ if __name__ == "__main__":
     results = scrape_serp(keyword)
     logger.info(f"number of search results: {len(results)}")
     logger.info(json.dumps(results, indent=2))
+
+# Enter keyword to scrape: seo company

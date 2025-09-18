@@ -11,6 +11,7 @@ uploads/
 prompts/
 old env/
 functions_folder/*.txt
+!functions_folder/results.txt
 templates/*.txt
 
 #functions_folder
