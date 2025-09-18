@@ -7,7 +7,6 @@ import time
 import random
 import logging
 import json
-import re
 
 # Setup dual-handler logger
 logger = logging.getLogger("SERPLogger")
