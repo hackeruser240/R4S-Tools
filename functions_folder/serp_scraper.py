@@ -7,6 +7,7 @@ import time
 import random
 import logging
 import json
+import re
 
 # Setup dual-handler logger
 logger = logging.getLogger("SERPLogger")
@@ -77,7 +78,8 @@ def scrape_serp(keyword, num_results=10):
         title_text = h2_tag.get_text(strip=True) if h2_tag else None
         url = link_tag.get("href") if link_tag else None
         snippet_text = snippet_tag.get_text(strip=True) if snippet_tag else ""
-        snippet_text = snippet_text.encode().decode('unicode_escape')
+        raw_bytes = snippet_text.encode('latin1', errors='ignore')
+        snippet_text = raw_bytes.decode('utf-8', errors='ignore')
 
 
         # Filter out junk titles (e.g. domain names mashed with URLs)
