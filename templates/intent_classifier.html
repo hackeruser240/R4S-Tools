@@ -1,0 +1,53 @@
+<!-- File: templates/intent_classifier.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Intent Classifier</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 60%;
+        }
+        th, td {
+            border: 1px solid #999;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+    <h2>Intent Classifier</h2>
+    <form method="POST">
+        <label for="keywords">Enter keywords (one per line):</label><br>
+        <textarea name="keywords" rows="10" cols="60">{{content}}</textarea><br><br>
+        <input type="submit" value="Classify">
+    </form>
+
+    {% if result %}
+        <h3>Predicted Intents:</h3>
+        <table>
+            <tr>
+                <th>Input Text</th>
+                <th>Predicted Intent</th>
+            </tr>
+            {% for text, intent in result.items() %}
+            <tr>
+                <td>{{ text }}</td>
+                <td>{{ intent }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+
+        <h3>Intent Summary:</h3>
+        <ul>
+            {% for intent, count in intent_counts.items() %}
+                <li>{{ intent }}: {{ count }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>

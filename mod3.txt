@@ -1,0 +1,7 @@
+#intent classifier
+flask
+scikit-learn
+sentence-transformers
+numpy
+joblib
+tabulate

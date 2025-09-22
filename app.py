@@ -15,10 +15,8 @@ from functions_folder.headline_optimizer import score_headline
 from functions_folder.brief_generator import generate_brief
 from functions_folder.topic_modeler import lda_topic_modeling, bert_topic_modeling, visualize_topics
 from functions_folder.internal_link_optimizer import extract_internal_links, suggest_internal_links
-
-
-
-
+from functions_folder.intent_classifier import classify_intents, summarize_intents
+from collections import Counter
 
 
 
@@ -297,6 +295,22 @@ def internal_link_optimizer():
         url_input=url_input,
         max_links_input=max_links_input
     )
+
+#============================================================
+#MODULE 3
+#============================================================
+
+@app.route('/intent_classifier', methods=['GET', 'POST'])
+def intent_classifier():
+    result = {}
+    intent_counts = {}
+    text_list=[]
+    if request.method == 'POST':
+        user_input = request.form['keywords']
+        text_list = [line.strip() for line in user_input.split('\n') if line.strip()]
+        result = classify_intents(text_list)
+        intent_counts = Counter(result.values())
+    return render_template('intent_classifier.html', result=result, intent_counts=intent_counts, content=text_list)
 
 
 
