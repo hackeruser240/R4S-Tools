@@ -1,5 +1,5 @@
 from flask import Flask,request, render_template, send_file
-from functions import *
+#from functions import *
 
 from functions_folder.performance_audit import run_lighthouse_audit
 from functions_folder.content_scorer import content_scorer
@@ -13,8 +13,8 @@ from functions_folder.internal_link_optimizer import suggest_internal_links
 from functions_folder.content_gap_finder import find_content_gaps
 from functions_folder.headline_optimizer import score_headline
 from functions_folder.brief_generator import generate_brief
-from functions_folder.topic_modeler import lda_topic_modeling, bert_topic_modeling
-
+from functions_folder.topic_modeler import lda_topic_modeling, bert_topic_modeling, visualize_topics
+from functions_folder.internal_link_optimizer import extract_internal_links, suggest_internal_links
 
 
 
@@ -170,67 +170,94 @@ def image_optimizer_route():
 @app.route("/topic_modeler", methods=["GET", "POST"])
 def topic_modeler():
     topics = []
+    raw_texts = ""
+    method = "lda"
+    num_topics = 3
+    error = None
+    show_viz = False
+
     if request.method == "POST":
         raw_texts = request.form["texts"]
         method = request.form["method"]
         num_topics = int(request.form.get("num_topics", 3))
+        show_viz = request.form.get("show_viz") == "yes"
 
         texts = [line.strip() for line in raw_texts.strip().split("\n") if line.strip()]
 
         if method == "lda":
             topics, lda_model, corpus, dictionary = lda_topic_modeling(texts, num_topics=num_topics)
-        elif method == "bert":
-            topics, embeddings, labels = bert_topic_modeling(texts, num_clusters=num_topics)
+            if show_viz:
+                visualize_topics("lda", lda_model=lda_model, corpus=corpus, dictionary=dictionary)
 
-    return render_template("topic_modeler.html", topics=topics)
+        elif method == "bert":
+            if len(texts) < num_topics:
+                error = f"You entered {len(texts)} text(s), but requested {num_topics} clusters. Please enter more texts or reduce the number of clusters."
+            else:
+                topics, embeddings, labels = bert_topic_modeling(texts, num_clusters=num_topics)
+                if show_viz:
+                    visualize_topics("bert", embeddings=embeddings, labels=labels)
+
+    return render_template(
+        "topic_modeler.html",
+        topics=topics,
+        raw_texts=raw_texts,
+        method=method,
+        num_topics=num_topics,
+        error=error,
+        show_viz=show_viz
+    )
 
 
 
 @app.route("/schema_generator", methods=["GET", "POST"])
 def schema_generator():
     schema = None
+    text = ""
+    schema_type = "Article"
+
     if request.method == "POST":
         text = request.form.get("text", "")
         schema_type = request.form.get("schema_type", "Article")
         schema = generate_schema_ld(text, schema_type)
-    return render_template("schema_generator.html", schema=schema)
+
+    return render_template("schema_generator.html", schema=schema, text=text, schema_type=schema_type)
 
 
-@app.route("/internal_link_optimizer", methods=["GET", "POST"])
-def internal_link_optimizer():
-    suggestions = None
-    if request.method == "POST":
-        pages = request.form["pages"].split(",")
-        pages = [p.strip() for p in pages if p.strip()]
-        
-        raw_links = request.form["links"].split(",")
-        links = []
-        for link in raw_links:
-            parts = link.strip().split("-")
-            if len(parts) == 2:
-                links.append((parts[0].strip(), parts[1].strip()))
-        
-        suggestions = suggest_internal_links(pages, links)
-
-    return render_template("internal_link_optimizer.html", suggestions=suggestions)
 
 @app.route("/content_gap_finder", methods=["GET", "POST"])
 def content_gap_finder():
-    results = None
+    results = []
+    your_content = ""
+    competitor_raw = ""
+
     if request.method == "POST":
-        your_content = request.form["your_content"]
-        competitor_raw = request.form["competitor_content"]
-        competitor_texts = [line.strip() for line in competitor_raw.strip().split("\n") if line.strip()]
-        results = find_content_gaps(your_content, competitor_texts, top_n=10)
-    return render_template("content_gap_finder.html", results=results)
+        your_content = request.form.get("your_content", "").strip()
+        competitor_raw = request.form.get("competitor_content", "").strip()
+        competitor_texts = [line.strip() for line in competitor_raw.split("\n") if line.strip()]
+
+        print("Your content:", your_content)
+        print("Competitor lines:", competitor_texts)
+
+        try:
+            results = find_content_gaps(your_content, competitor_texts, top_n=10)
+            print("RESULTS:", results)
+        except Exception as e:
+            print("Error in content gap finder:", e)
+            results = []
+    print("Sending to template:", results)
+    return render_template("content_gap_finder.html",
+                           results=results,
+                           your_content=your_content,
+                           competitor_raw=competitor_raw)
 
 @app.route("/headline_optimizer", methods=["GET", "POST"])
 def headline_optimizer():
     result = None
+    headline=""
     if request.method == "POST":
         headline = request.form["headline"]
         result = score_headline(headline)
-    return render_template("headline_optimizer.html", result=result)
+    return render_template("headline_optimizer.html", result=result, headline=headline)
 
 
 @app.route("/brief_generator", methods=["GET", "POST"])
@@ -241,6 +268,36 @@ def brief_generator():
         faq_count = int(request.form.get("faq_count", 5))
         result = generate_brief(seed_text, faq_count)
     return render_template("brief_generator.html", result=result)
+
+
+@app.route("/internal_link_optimizer", methods=["GET", "POST"])
+def internal_link_optimizer():
+    suggestions = []
+    url_input = ""
+    max_links_input = "8"
+
+    if request.method == "POST":
+        url_input = request.form.get("url", "").strip()
+        max_links_input = request.form.get("max_links", "10").strip()
+
+        try:
+            max_links = int(max_links_input)
+        except ValueError:
+            max_links = 10  # fallback if input is invalid
+
+        if url_input:
+            print(f"🔍 Crawling homepage: {url_input}")
+            slugs, error = extract_internal_links(url_input, max_links=max_links)
+            if not error and slugs:
+                suggestions = suggest_internal_links(slugs, url_input, top_n=3)
+
+    return render_template(
+        "internal_link_optimizer.html",
+        suggestions=suggestions,
+        url_input=url_input,
+        max_links_input=max_links_input
+    )
+
 
 
 application = app

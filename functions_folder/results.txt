@@ -1,0 +1,38 @@
+19-Sep-2025 01:41 AM - INFO - Keyword: artificial intelligence
+19-Sep-2025 01:41 AM - INFO - Company to search for: wikipedia
+19-Sep-2025 01:41 AM - INFO - Found 5 result blocks
+19-Sep-2025 01:41 AM - INFO - Number of search results: 5
+19-Sep-2025 01:41 AM - INFO - [
+  {
+    "title": "Artificial intelligence-Wikipedia",
+    "url": "https://en.wikipedia.org/wiki/Artificial_intelligence",
+    "snippet": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, "
+  },
+  {
+    "title": "Artificial intelligence(AI) | Definition, Examples, Types ...",
+    "url": "https://www.britannica.com/technology/artificial-intelligence",
+    "snippet": "6 days ago What is artificial intelligence? Artificial intelligence is the ability of a computer or computer-controlled robot to perform tasks "
+  },
+  {
+    "title": "What IsArtificial Intelligence? Definition, Uses, and Types",
+    "url": "https://www.coursera.org/articles/what-is-artificial-intelligence",
+    "snippet": "Aug 14, 2025 What is artificial intelligence? Artificial intelligence (AI) is the theory and development of computer systems capable of "
+  },
+  {
+    "title": "What isArtificial Intelligence(AI)? - Google Cloud",
+    "url": "https://cloud.google.com/learn/what-is-artificial-intelligence",
+    "snippet": "Artificial intelligence (AI) is a set of technologies that enable computers to perform a variety of advanced functions, including the ability to "
+  },
+  {
+    "title": "What isartificial intelligence(AI)? -IBM",
+    "url": "https://www.ibm.com/think/topics/artificial-intelligence",
+    "snippet": "Artificial intelligence (AI) is technology that enables computers and machines to simulate human learning, comprehension, problem "
+  }
+]
+19-Sep-2025 01:41 AM - INFO - ✅ Match found for 'wikipedia':
+19-Sep-2025 01:41 AM - INFO - The company ranked: 1!
+19-Sep-2025 01:41 AM - INFO - {
+  "title": "Artificial intelligence-Wikipedia",
+  "url": "https://en.wikipedia.org/wiki/Artificial_intelligence",
+  "snippet": "Artificial intelligence (AI) is the capability of computational systems to perform tasks typically associated with human intelligence, "
+}

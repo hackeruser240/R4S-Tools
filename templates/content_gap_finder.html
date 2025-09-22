@@ -9,26 +9,31 @@
     <h1>Content Gap Finder</h1>
     <form method="POST">
         <label>Your Content:</label><br>
-        <textarea name="your_content" rows="6" cols="80"></textarea><br><br>
+        <textarea name="your_content" rows="6" cols="80">{{your_content}}</textarea><br><br>
 
         <label>Competitor Content (one per line):</label><br>
-        <textarea name="competitor_content" rows="6" cols="80"></textarea><br><br>
+        <textarea name="competitor_content" rows="6" cols="80">{{competitor_raw}}</textarea><br><br>
 
         <input type="submit" value="Find Gaps">
     </form>
 
-    {% if results %}
-        <h2>Top Missing Topics</h2>
-        <table border="1">
-            <tr><th>Term</th><th>TF-IDF Gap</th><th>Semantic Similarity</th></tr>
-            {% for item in results %}
-                <tr>
-                    <td>{{ item.term }}</td>
-                    <td>{{ item.tfidf_score }}</td>
-                    <td>{{ item.semantic_score }}</td>
-                </tr>
-            {% endfor %}
-        </table>
+    {% if request.method == 'POST' %}
+        {% if results %}
+            <h2>Top Missing Topics</h2>
+            <table border="1">
+                <tr><th>Term</th><th>TF-IDF Gap</th><th>Semantic Similarity</th></tr>
+                {% for item in results %}
+                    <tr>
+                        <td>{{ item.term }}</td>
+                        <td>{{ item.tfidf_score }}</td>
+                        <td>{{ item.semantic_score }}</td>
+                    </tr>
+                {% endfor %}
+            </table>
+        {% else %}
+            <p>No gaps found. Try expanding your competitor content or adjusting your input.</p>
+        {% endif %}
     {% endif %}
+    
 </body>
 </html>

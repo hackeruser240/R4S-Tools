@@ -40,23 +40,35 @@
         }
     </style>
 </head>
+
 <body>
     <h1>Topic Modeler</h1>
     <form method="POST">
         <label for="texts">Enter one text per line:</label>
-        <textarea name="texts" rows="10" required></textarea>
+        <textarea name="texts" rows="10" required>{{ raw_texts }}</textarea>
 
         <label for="method">Choose modeling method:</label>
         <select name="method">
-            <option value="lda">LDA</option>
-            <option value="bert">BERT</option>
+            <option value="lda" {% if method == 'lda' %}selected{% endif %}>LDA</option>
+            <option value="bert" {% if method == 'bert' %}selected{% endif %}>BERT</option>
         </select>
 
         <label for="num_topics">Number of topics/clusters:</label>
-        <input type="number" name="num_topics" value="3" min="2" max="10">
+        <input type="number" name="num_topics" value="{{ num_topics }}" min="2" max="10">
+
+        <br>
+        <label>
+            <input type="checkbox" name="show_viz" value="yes"
+                {% if request.form.get('show_viz') == 'yes' %}checked{% endif %}>
+            Show Visualization
+        </label>
 
         <input type="submit" value="Generate Topics">
     </form>
+
+    {% if error %}
+        <div style="color: red; font-weight: bold;">{{ error }}</div>
+    {% endif %}
 
     {% if topics %}
         <h2>Detected Topics</h2>
@@ -72,6 +84,16 @@
                 </ul>
             </div>
         {% endfor %}
+
+        {% if show_viz and method == 'lda' %}
+            <h2>Graph</h2>
+            <a href="{{ url_for('static', filename='lda_visualization.html') }}" target="_blank">
+                <button>View HTML Report</button>
+            </a>
+        {% elif show_viz and method == 'bert' %}
+            <h2>Graph</h2>
+            <iframe src="{{ url_for('static', filename='bert_clusters.png') }}" width="100%" height="600"></iframe>
+        {% endif %}
     {% endif %}
 </body>
 </html>

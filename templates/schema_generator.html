@@ -9,15 +9,18 @@
     <h1>Schema Generator</h1>
     <form method="POST">
         <label for="text">Enter your content:</label><br>
-        <textarea name="text" rows="10" cols="80"></textarea><br><br>
+        <textarea name="text" rows="10" cols="80">{{ text }}</textarea><br><br>
+
 
         <label for="schema_type">Schema Type:</label>
+        
         <select name="schema_type">
-            <option value="Article">Article</option>
-            <option value="Product">Product</option>
-            <option value="Event">Event</option>
-            <option value="Organization">Organization</option>
+            <option value="Article" {% if schema_type == 'Article' %}selected{% endif %}>Article</option>
+            <option value="Product" {% if schema_type == 'Product' %}selected{% endif %}>Product</option>
+            <option value="Event" {% if schema_type == 'Event' %}selected{% endif %}>Event</option>
+            <option value="Organization" {% if schema_type == 'Organization' %}selected{% endif %}>Organization</option>
         </select><br><br>
+
 
         <input type="submit" value="Generate Schema">
     </form>
