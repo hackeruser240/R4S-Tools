@@ -18,6 +18,12 @@ from functions_folder.internal_link_optimizer import extract_internal_links, sug
 from functions_folder.intent_classifier import classify_intents, summarize_intents
 from collections import Counter
 
+from functions_folder.trend_visualizer import create_sample_data, plot_trends
+import pandas as pd
+import os
+
+
+
 
 
 import os 
@@ -311,6 +317,41 @@ def intent_classifier():
         result = classify_intents(text_list)
         intent_counts = Counter(result.values())
     return render_template('intent_classifier.html', result=result, intent_counts=intent_counts, content=text_list)
+
+@app.route('/trend_visualizer', methods=['GET', 'POST'])
+def trend_visualizer():
+    chart_path = "static/trend_chart.html"
+    error_msg = ""
+    raw_input = ""
+
+    if request.method == 'POST':
+        os.makedirs("static", exist_ok=True)  # Ensure static folder exists
+
+        if 'sample' in request.form:
+            df = create_sample_data()
+            html_chart = plot_trends(df)
+            with open(chart_path, "w", encoding="utf-8") as f:
+                f.write(html_chart)
+            raw_input = "Loaded sample data."
+
+        elif 'csvfile' in request.files:
+            file = request.files['csvfile']
+            raw_input = file.filename
+            try:
+                df = pd.read_csv(file)
+                html_chart = plot_trends(df)
+                with open(chart_path, "w", encoding="utf-8") as f:
+                    f.write(html_chart)
+            except Exception as e:
+                error_msg = f"Error processing CSV: {str(e)}"
+
+    chart_exists = os.path.exists(chart_path)
+    return render_template('trend_visualizer.html',
+                           chart_exists=chart_exists,
+                           chart_path=chart_path,
+                           error_msg=error_msg,
+                           raw_input=raw_input)
+
 
 
 

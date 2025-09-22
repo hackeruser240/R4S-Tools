@@ -5,3 +5,8 @@ sentence-transformers
 numpy
 joblib
 tabulate
+
+#trend visualizer
+flask
+pandas
+plotly
