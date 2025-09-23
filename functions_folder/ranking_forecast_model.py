@@ -80,7 +80,6 @@ def ranking_forecast_model(data: pd.DataFrame, forecast_horizon: int = 30):
         }
     }
 
-
 def visualize_forecast_results(forecast_data: dict) -> str:
     """
     Generates an interactive Plotly HTML chart for keyword ranking forecast.
@@ -114,10 +113,41 @@ def visualize_forecast_results(forecast_data: dict) -> str:
     # Return as HTML div string
     return pio.to_html(fig, full_html=False)
 
+def generate_forecast_summary(forecast_data: dict) -> str:
+    """
+    Generates a natural-language summary of the forecast trend.
+    """
+    keyword = forecast_data.get("keyword", "Unknown Keyword")
+    forecast = forecast_data.get("forecast", [])
+
+    if not forecast:
+        return "No forecast data available."
+
+    ranks = [row["predicted_rank"] for row in forecast]
+    dates = [row["date"] for row in forecast]
+
+    start_rank = ranks[0]
+    end_rank = ranks[-1]
+    best_rank = min(ranks)
+    best_date = pd.to_datetime(dates[ranks.index(best_rank)]).strftime("%d-%b-%Y")
+
+    trend = "improving" if end_rank < start_rank else "declining" if end_rank > start_rank else "stable"
+    change = round(abs(end_rank - start_rank), 2)
+
+    summary = (
+        f"📊 The keyword *'{keyword}'* is forecasted to be {trend} over the next {len(ranks)} days. "
+        f"It starts at rank {round(start_rank, 2)} and ends at rank {round(end_rank, 2)}, "
+        f"with a total change of {change} points. "
+        f"The best predicted rank is {round(best_rank, 2)} on {best_date}."
+    )
+
+    return summary
+
 if __name__ == "__main__":
-    keyword = "MOF membranes"
+    keyword = "seo optimization"
     sample_data = load_sample_data(keyword=keyword)
     result = ranking_forecast_model(sample_data, forecast_horizon=30)
+    summary_text = generate_forecast_summary(result)
 
     print(f"\n🔍 Forecast for keyword: {result['keyword']}\n")
     print("📈 Forecast Output (first 5 days):")
@@ -130,10 +160,31 @@ if __name__ == "__main__":
     # Visualization
     html_chart = visualize_forecast_results(result)
 
-    # Save chart to file
+    # Save chart + summary to file
     output_path = f"static/forecast_chart_{keyword.replace(' ', '_')}.html"
     with open(output_path, "w", encoding="utf-8") as f:
-        f.write(html_chart)
+        f.write(f"""
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>Forecast for {keyword}</title>
+            <meta charset="utf-8">
+            <style>
+                body {{ font-family: Arial, sans-serif; margin: 40px; }}
+                h1 {{ color: #333; }}
+                .summary {{ background: #f9f9f9; padding: 20px; border-left: 4px solid #007BFF; margin-bottom: 30px; }}
+            </style>
+        </head>
+        <body>
+            <h1>📈 Forecast for Keyword: {keyword}</h1>
+            <div class="summary">
+                <h4>🧠 Summary</h4>
+                <p>{summary_text}</p>
+            </div>
+            {html_chart}
+        </body>
+        </html>
+        """)
 
-    print(f"\n📊 Interactive chart saved to: {output_path}")
-    print("💡 Open this file in your browser to view the forecast.")
+    print(f"\n📊 Interactive chart + summary saved to: {output_path}")
+    print("💡 Open this file in your browser to view the forecast and summary.")
