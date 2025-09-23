@@ -22,8 +22,7 @@ from functions_folder.trend_visualizer import create_sample_data, plot_trends
 import pandas as pd
 import os
 
-
-
+from functions_folder.ranking_forecast_model import create_sample_data,generate_all_forecasts
 
 
 import os 
@@ -353,6 +352,18 @@ def trend_visualizer():
                            raw_input=raw_input)
 
 
+@app.route('/ranking_forecast_model', methods=['GET', 'POST'])
+def ranking_forecast_model():
+        df = create_sample_data()  # or however many you want
+        charts = generate_all_forecasts(df)
+
+        selected_keyword = request.form.get("keyword", list(charts.keys())[0])
+        chart_html = charts.get(selected_keyword, "")
+
+        return render_template("ranking_forecast_model.html",
+                            keywords=list(charts.keys()),
+                            selected_keyword=selected_keyword,
+                            chart_html=chart_html)
 
 
 application = app

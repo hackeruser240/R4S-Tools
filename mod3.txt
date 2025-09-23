@@ -10,3 +10,8 @@ tabulate
 flask
 pandas
 plotly
+
+#ranking_forecast_model
+plotly
+prophet
+xgboost
