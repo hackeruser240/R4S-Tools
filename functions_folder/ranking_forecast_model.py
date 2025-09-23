@@ -144,7 +144,7 @@ def generate_forecast_summary(forecast_data: dict) -> str:
     return summary
 
 if __name__ == "__main__":
-    keyword = "seo optimization"
+    keyword = "MOF membranes"
     sample_data = load_sample_data(keyword=keyword)
     result = ranking_forecast_model(sample_data, forecast_horizon=30)
     summary_text = generate_forecast_summary(result)

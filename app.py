@@ -22,7 +22,13 @@ from functions_folder.trend_visualizer import create_sample_data, plot_trends
 import pandas as pd
 import os
 
-from functions_folder.ranking_forecast_model import create_sample_data,generate_all_forecasts
+from functions_folder.ranking_forecast_model import (
+    load_sample_data,
+    ranking_forecast_model,
+    visualize_forecast_results,
+    generate_forecast_summary
+)
+
 
 
 import os 
@@ -352,18 +358,36 @@ def trend_visualizer():
                            raw_input=raw_input)
 
 
-@app.route('/ranking_forecast_model', methods=['GET', 'POST'])
-def ranking_forecast_model():
-        df = create_sample_data()  # or however many you want
-        charts = generate_all_forecasts(df)
+@app.route("/ranking_forecast", methods=["GET", "POST"])
+def ranking_forecast():
+    forecast_output = None
+    chart_html = None
+    summary_text = None
+    keyword = "MOF membranes"
+    forecast_horizon = 30
 
-        selected_keyword = request.form.get("keyword", list(charts.keys())[0])
-        chart_html = charts.get(selected_keyword, "")
+    if request.method == "POST":
+        keyword = request.form.get("keyword", "MOF membranes")
+        try:
+            forecast_horizon = int(request.form.get("forecast_horizon", 30))
+        except ValueError:
+            forecast_horizon = 30
 
-        return render_template("ranking_forecast_model.html",
-                            keywords=list(charts.keys()),
-                            selected_keyword=selected_keyword,
-                            chart_html=chart_html)
+        sample_data = load_sample_data(keyword=keyword)
+        forecast_output = ranking_forecast_model(sample_data, forecast_horizon)
+        chart_html = visualize_forecast_results(forecast_output)
+        summary_text = generate_forecast_summary(forecast_output)
+    else:
+        sample_data = load_sample_data(keyword=keyword)
+
+    return render_template("ranking_forecast.html",
+                           keyword=keyword,
+                           forecast_horizon=forecast_horizon,
+                           forecast_output=forecast_output,
+                           chart_html=chart_html,
+                           summary_text=summary_text)
+
+
 
 
 application = app

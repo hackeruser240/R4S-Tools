@@ -1,0 +1,59 @@
+<!-- File: templates/ranking_forecast.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ranking Forecast Model</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        h1 { color: #333; }
+        .summary { background: #f9f9f9; padding: 20px; border-left: 4px solid #007BFF; margin-bottom: 30px; }
+        .form-group { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1>📈 Keyword Ranking Forecast</h1>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="keyword">Keyword:</label>
+            <input type="text" name="keyword" value="{{ keyword }}">
+        </div>
+        <div class="form-group">
+            <label for="forecast_horizon">Forecast Horizon (days):</label>
+            <input type="number" name="forecast_horizon" value="{{ forecast_horizon }}">
+        </div>
+        <button type="submit">Run Forecast</button>
+    </form>
+
+    {% if forecast_output %}
+    <div class="summary">
+        <h3>🧠Summary</h3>
+        <p>{{ summary_text }}</p>
+    </div>
+
+    <h2>📊 Forecast Chart</h2>
+    <div>{{ chart_html | safe }}</div>
+
+    <h2>🔍 Forecast Table</h2>
+    <table border="1">
+        <tr><th>Date</th><th>Predicted Rank</th></tr>
+        {% for row in forecast_output.forecast %}
+        <tr>
+            <td>{{ row.date }}</td>
+            <td>{{ row.predicted_rank }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>📈 Model Diagnostics</h2>
+    <ul>
+        <li>Keyword: {{ forecast_output.keyword }}</li>
+        <li>Prophet RMSE: {{ forecast_output.model_metadata.prophet_rmse }}</li>
+        <li>XGBoost RMSE: {{ forecast_output.model_metadata.xgboost_rmse }}</li>
+        <li>Ensemble Strategy: {{ forecast_output.model_metadata.ensemble_strategy }}</li>
+    </ul>
+    {% endif %}
+</body>
+</html>
