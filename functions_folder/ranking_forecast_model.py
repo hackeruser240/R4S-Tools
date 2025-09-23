@@ -2,120 +2,138 @@
 
 import pandas as pd
 import numpy as np
+import plotly.graph_objects as go
+import plotly.io as pio
 from prophet import Prophet
 from xgboost import XGBRegressor
-import plotly.express as px
-import os
-import random
+from sklearn.metrics import mean_squared_error
 
-def generate_keywords(n=10):
-    base_terms = [
-        "MOF", "membrane", "crystallization", "substrate", "adsorption",
-        "synthesis", "catalysis", "nanoporous", "linker", "separation",
-        "template", "vapor-phase", "bioinformatics", "pipeline", "reactor",
-        "porosity", "selectivity", "diffusion", "framework", "kinetics"
-    ]
-
-    keywords = []
-    for _ in range(n):
-        term1 = random.choice(base_terms)
-        term2 = random.choice(base_terms)
-        keyword = f"{term1}_{term2}"
-        keywords.append(keyword)
-
-    return keywords
-
-def create_sample_data(keywords=None):
-    if keywords is None:
-        keywords = generate_keywords()
-
-    dates = pd.date_range(start="2025-01-01", periods=12, freq="MS")
-    data = []
-    rng = np.random.default_rng(seed=90)
-
-    for kw in keywords:
-        base = rng.integers(5, 20)
-        
-        slope = rng.uniform(-10, 10)
-        trend = base + slope * np.linspace(0, 1, len(dates))
-        
-        noise_level = rng.uniform(1, 10)
-        noise = rng.normal(0, noise_level, len(dates))
-        
-        ranks = np.clip(trend + noise, 1, None).astype(int)
-        for d, r in zip(dates, ranks):
-            data.append({"keyword": kw, "ds": d, "y": r})
-
-    return pd.DataFrame(data)
-
-def forecast_with_prophet(df, keyword):
-    df_kw = df[df['keyword'] == keyword][['ds', 'y']]
-    if df_kw.dropna().shape[0] < 2:
-        raise ValueError(f"Not enough data for keyword: {keyword}")
-    model = Prophet()
-    model.fit(df_kw)
-    future = model.make_future_dataframe(periods=6, freq='MS')
-    forecast = model.predict(future)
-    forecast['keyword'] = keyword
-    return forecast[['ds', 'yhat', 'keyword']]
-
-def forecast_with_xgboost(df, keyword):
-    df_kw = df[df['keyword'] == keyword].copy()
-    if df_kw.shape[0] < 2:
-        raise ValueError(f"Not enough data for keyword: {keyword}")
-    df_kw['month'] = df_kw['ds'].dt.month
-    df_kw['year'] = df_kw['ds'].dt.year
-    X = df_kw[['month', 'year']]
-    y = df_kw['y']
-    model = XGBRegressor()
-    model.fit(X, y)
-
-    future_dates = pd.date_range(start=df_kw['ds'].max() + pd.DateOffset(months=1), periods=6, freq='MS')
-    future_df = pd.DataFrame({
-        'month': future_dates.month,
-        'year': future_dates.year
+def load_sample_data(keyword="Sample Keyword"):
+    """
+    Returns sample keyword ranking data for a given keyword.
+    """
+    dates = pd.date_range(start="2025-08-01", periods=60)
+    data = pd.DataFrame({
+        "keyword": keyword,
+        "date": dates,
+        "rank": np.clip(20 - 0.1 * np.arange(60) + np.random.normal(0, 1, 60), 1, 50),
+        "search_volume": np.random.randint(1000, 3000, size=60),
+        "clicks": np.random.randint(100, 500, size=60)
     })
-    preds = model.predict(future_df)
-    return pd.DataFrame({
-        'ds': future_dates,
-        'yhat': preds,
-        'keyword': keyword
+    return data
+
+def ranking_forecast_model(data: pd.DataFrame, forecast_horizon: int = 30):
+    """
+    Forecasts future keyword rankings using Prophet and XGBoost.
+    Returns forecasted ranks and model diagnostics.
+    """
+    if "keyword" not in data.columns:
+        raise ValueError("Input data must contain a 'keyword' column.")
+
+    keyword = data["keyword"].iloc[0]
+    df = data.copy()
+    df['ds'] = pd.to_datetime(df['date'])
+    df['y'] = df['rank']
+
+    # Prophet model
+    prophet_model = Prophet()
+    prophet_model.fit(df[['ds', 'y']])
+    future = prophet_model.make_future_dataframe(periods=forecast_horizon)
+    prophet_forecast = prophet_model.predict(future)
+    prophet_preds = prophet_forecast[['ds', 'yhat']].tail(forecast_horizon)
+
+    # XGBoost model
+    df['dayofyear'] = df['ds'].dt.dayofyear
+    X_train = df[['dayofyear', 'search_volume', 'clicks']]
+    y_train = df['rank']
+
+    xgb_model = XGBRegressor()
+    xgb_model.fit(X_train, y_train)
+
+    future_days = future.tail(forecast_horizon)
+    future_features = pd.DataFrame({
+        'dayofyear': future_days['ds'].dt.dayofyear,
+        'search_volume': np.random.randint(1000, 3000, size=forecast_horizon),
+        'clicks': np.random.randint(100, 500, size=forecast_horizon)
     })
 
-def plot_forecast(df_forecast):
-    fig = px.line(df_forecast, x='ds', y='yhat', color='keyword', markers=True,
-                  title='Forecasted Keyword Rankings')
-    fig.update_layout(template='plotly_white')
-    fig.update_yaxes(autorange='reversed')  # Lower rank = better
-    return fig.to_html(full_html=False)
+    xgb_preds = xgb_model.predict(future_features)
 
-def generate_all_forecasts(df):
+    # Ensemble prediction
+    final_preds = 0.5 * prophet_preds['yhat'].values + 0.5 * xgb_preds
+    forecast = pd.DataFrame({
+        "date": future_days['ds'].values,
+        "predicted_rank": final_preds
+    })
+
+    # Diagnostics
+    prophet_rmse = np.sqrt(mean_squared_error(y_train, prophet_model.predict(df[['ds']])['yhat']))
+    xgb_rmse = np.sqrt(mean_squared_error(y_train, xgb_model.predict(X_train)))
+
+    return {
+        "keyword": keyword,
+        "forecast": forecast.to_dict(orient="records"),
+        "model_metadata": {
+            "prophet_rmse": round(prophet_rmse, 2),
+            "xgboost_rmse": round(xgb_rmse, 2),
+            "ensemble_strategy": "weighted_average"
+        }
+    }
+
+
+def visualize_forecast_results(forecast_data: dict) -> str:
     """
-    Generates forecasts for all keywords in the dataset using Prophet and XGBoost.
-    Returns a dictionary of keyword → HTML chart.
+    Generates an interactive Plotly HTML chart for keyword ranking forecast.
+    Returns HTML string to embed in Flask template.
     """
-    charts = {}
-    for kw in df['keyword'].unique():
-        print("Keywords detected:", df['keyword'].unique())
-        try:
-            forecast_df = pd.concat([
-                forecast_with_prophet(df, kw),
-                forecast_with_xgboost(df, kw)
-            ])
-            chart_html = plot_forecast(forecast_df)
-            charts[kw] = chart_html
-        except Exception as e:
-            print(f"⚠️ Skipping {kw}: {e}")
-    return charts
+    keyword = forecast_data.get("keyword", "Unknown Keyword")
+    forecast = forecast_data.get("forecast", [])
 
-# 🔧 Local test block
-if __name__ == '__main__':
-    df = create_sample_data()
-    charts = generate_all_forecasts(df)
-    os.makedirs("static", exist_ok=True)
+    dates = [row["date"] for row in forecast]
+    ranks = [row["predicted_rank"] for row in forecast]
 
-    for kw, html in charts.items():
-        filename = f"static/{kw}_forecast_chart.html"
-        with open(filename, "w", encoding="utf-8") as f:
-            f.write(html)
-        print(f"✅ Chart saved: {filename}")
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(
+        x=dates,
+        y=ranks,
+        mode='lines+markers',
+        name='Predicted Rank',
+        line=dict(color='royalblue', width=2),
+        marker=dict(size=6)
+    ))
+
+    fig.update_layout(
+        title=f"📈 Forecasted Ranking for '{keyword}'",
+        xaxis_title="Date",
+        yaxis_title="Predicted Rank (lower is better)",
+        yaxis_autorange="reversed",
+        template="plotly_white",
+        margin=dict(l=40, r=40, t=60, b=40)
+    )
+
+    # Return as HTML div string
+    return pio.to_html(fig, full_html=False)
+
+if __name__ == "__main__":
+    keyword = "MOF membranes"
+    sample_data = load_sample_data(keyword=keyword)
+    result = ranking_forecast_model(sample_data, forecast_horizon=30)
+
+    print(f"\n🔍 Forecast for keyword: {result['keyword']}\n")
+    print("📈 Forecast Output (first 5 days):")
+    for row in result["forecast"][:5]:
+        print(row)
+
+    print("\n📊 Model Metadata:")
+    print(result["model_metadata"])
+
+    # Visualization
+    html_chart = visualize_forecast_results(result)
+
+    # Save chart to file
+    output_path = f"static/forecast_chart_{keyword.replace(' ', '_')}.html"
+    with open(output_path, "w", encoding="utf-8") as f:
+        f.write(html_chart)
+
+    print(f"\n📊 Interactive chart saved to: {output_path}")
+    print("💡 Open this file in your browser to view the forecast.")

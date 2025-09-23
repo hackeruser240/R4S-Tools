@@ -12,6 +12,8 @@ pandas
 plotly
 
 #ranking_forecast_model
-plotly
+pandas
+numpy
 prophet
 xgboost
+scikit-learn
