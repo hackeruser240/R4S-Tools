@@ -363,29 +363,37 @@ def ranking_forecast():
     forecast_output = None
     chart_html = None
     summary_text = None
-    keyword = "MOF membranes"
+    keyword = ""
     forecast_horizon = 30
+    show_form = False
 
+    # If user clicked "Use Sample Data" (GET request)
+    if request.method == "GET" and request.args.get("load_sample") == "true":
+        show_form = True
+
+    # If user submitted the form (POST request)
     if request.method == "POST":
-        keyword = request.form.get("keyword", "MOF membranes")
+        keyword = request.form.get("keyword", "").strip()
         try:
             forecast_horizon = int(request.form.get("forecast_horizon", 30))
         except ValueError:
             forecast_horizon = 30
 
-        sample_data = load_sample_data(keyword=keyword)
-        forecast_output = ranking_forecast_model(sample_data, forecast_horizon)
-        chart_html = visualize_forecast_results(forecast_output)
-        summary_text = generate_forecast_summary(forecast_output)
-    else:
-        sample_data = load_sample_data(keyword=keyword)
+        if keyword:
+            sample_data = load_sample_data(keyword=keyword)
+            forecast_output = ranking_forecast_model(sample_data, forecast_horizon)
+            chart_html = visualize_forecast_results(forecast_output)
+            summary_text = generate_forecast_summary(forecast_output)
+            show_form = True  # Show form again after processing
 
     return render_template("ranking_forecast.html",
                            keyword=keyword,
                            forecast_horizon=forecast_horizon,
                            forecast_output=forecast_output,
                            chart_html=chart_html,
-                           summary_text=summary_text)
+                           summary_text=summary_text,
+                           show_form=show_form)
+
 
 
 
