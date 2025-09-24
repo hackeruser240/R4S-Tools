@@ -17,14 +17,29 @@
 <body>
     <h1>📊 Keyword Ranking Forecast Dashboard</h1>
 
+
+    <div class="section">
+        <h3>🧭 How to Use the Keyword Ranking Forecast Tool</h3>
+        <p>
+            This tool helps you predict how a keyword might perform in search rankings over time. It’s useful for SEO planning, content strategy, and understanding keyword trends.
+            <br><br>
+            <strong>You have two options to get started:</strong><br>
+            1. <strong>Preview Previously Loaded Data:</strong> View a sample forecast that’s already been generated.<br>
+            2. <strong>Use Sample Data:</strong> Open the forecasting form, enter your keyword and forecast horizon, then click “Run Forecast”.
+            <br><br>
+            Once processed, you’ll see a summary, an interactive chart, a forecast table, and model diagnostics. No technical background is needed — just enter a keyword and explore the results.
+        </p>
+    </div>
+    <br><hr><br>
+
     <div class="section">
         <h2>Choose an Option</h2>
         <div class="button-group">
-            <form action="/static/forecast_chart_MOF_membranes.html" method="get" target="_blank" style="display:inline;">
+            <form action="/aio/static/forecast_chart_MOF_membranes.html" method="get" target="_blank" style="display:inline;">
                 <button type="submit">🔍 Preview Previously Loaded Data</button>
             </form>
 
-            <form method="GET" action="/ranking_forecast" style="display:inline;">
+            <form method="GET" action="/aio/ranking_forecast" style="display:inline;">
                 <input type="hidden" name="load_sample" value="true">
                 <button type="submit">📈 Use Sample Data</button>
             </form>

@@ -1,3 +1,5 @@
+<!-- trend_visualizer.html -->
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,9 +8,32 @@
 <body>
     <h2>Keyword Trend Visualizer</h2>
 
+    <div>
+        <h3>🧭 How to Use the Keyword Trend Visualizer</h3>
+        <p>
+            This tool helps you visualize how keywords perform over time — useful for spotting trends, seasonality, or sudden spikes in interest.
+            <br><br>
+            <strong>You have two options:</strong><br>
+            1. <strong>Load Sample Data:</strong> Click the “Load Sample Data” button to see a demo chart using built-in example keywords.<br>
+            2. <strong>Upload Your Own CSV File:</strong> Choose a CSV file with keyword data, then click “Upload and Plot” to generate your own chart.
+            <br><br>
+            After processing, you’ll see a button to view the chart in a new tab. If there’s an issue with your file, an error message will appear to help you fix it.
+        </p>
+    </div>
+    <br><hr><br>
+
     <form method="POST">
         <button type="submit" name="sample">Load Sample Data</button>
     </form>
+
+    {% if chart_exists %}
+<div style="display: flex; align-items: center; gap: 10px;">
+    <h3 style="margin: 0;">Trend Chart:</h3>
+    <form action="{{ chart_path }}" method="get" target="_blank">
+        <button type="submit">View</button>
+    </form>
+</div>
+    {% endif %}
 
     <br><hr><br>
 
@@ -26,15 +51,6 @@
         <p style="color:red;">{{ error_msg }}</p>
     {% endif %}
 
-    {% if chart_exists %}
-        <h3>Trend Chart:</h3>
-        <!-- 
-        <iframe src="{{ chart_path }}" width="100%" height="600" style="border:none;"></iframe>
-        <br><br>
-        -->
-        <form action="{{ chart_path }}" method="get" target="_blank">
-            <button type="submit">View Image</button>
-        </form>
-    {% endif %}
+
 </body>
 </html>

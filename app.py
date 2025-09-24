@@ -326,6 +326,9 @@ def intent_classifier():
 @app.route('/trend_visualizer', methods=['GET', 'POST'])
 def trend_visualizer():
     chart_path = "static/trend_chart.html"
+    if os.path.exists(chart_path):
+        os.remove(chart_path)
+
     error_msg = ""
     raw_input = ""
 
