@@ -10,9 +10,11 @@ static/
 uploads/
 prompts/
 old env/
-functions_folder/*.txt
-!functions_folder/results.txt
 templates/*.txt
+.gitignore
 
 #functions_folder
 functions_folder/__pycache__/
+functions_folder/*.*
+!functions_folder/results.txt
+!functions_folder/*.py
