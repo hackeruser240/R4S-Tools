@@ -17,3 +17,6 @@ numpy
 prophet
 xgboost
 scikit-learn
+
+#keyword_monitor:
+dotenv
