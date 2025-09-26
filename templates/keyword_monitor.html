@@ -1,0 +1,77 @@
+<!-- File: templates/keyword_monitor.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Keyword Monitor</title>
+    <meta charset="utf-8">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; max-width: 900px; }
+        .form-group { margin-bottom: 20px; }
+        textarea, input[type="text"] { width: 100%; padding: 8px; font-size: 14px; }
+        input[type="submit"] { padding: 10px 20px; font-size: 16px; }
+        table { border-collapse: collapse; width: 100%; margin-top: 30px; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; font-size: 14px; }
+        th { background-color: #f2f2f2; }
+        .instructions { background-color: #f9f9f9; padding: 20px; border-left: 4px solid #007BFF; margin-bottom: 30px; }
+    </style>
+</head>
+
+<body>
+    <h2>🔍 Keyword Monitor (Google Search API)</h2>
+
+    <div class="instructions">
+        <h3>What is this tool?</h3>
+        <p>This tool helps you track how specific keywords appear in Google search results. It’s useful for understanding how visible your content is online, especially if you're working on SEO, marketing, or content strategy.</p>
+
+        <h3>How to use it:</h3>
+        <ul>
+            <li>Enter your <strong>Google API Key</strong> and <strong> Google Engine ID (cx)</strong>. These are needed to access Google search results.</li>
+            <li>Type one or more keywords in the box below — one per line.</li>
+            <li>Click <strong>Track Rankings</strong> to see the top result for each keyword.</li>
+            <li>The tool will also save the results in a folder on the server for future reference.</li>
+        </ul>
+        <p><em>You don’t need any technical knowledge — just copy and paste your keywords and click the button.</em></p>
+    </div>
+
+    <form method="POST">
+        <div class="form-group">
+            <label for="api_key">🔑 Google API Key:</label>
+            <input type="text" name="api_key" value="{{ api_key }}">
+        </div>
+        <div class="form-group">
+            <label for="cx_id">🔍 Search Engine ID (cx):</label>
+            <input type="text" name="cx_id" value="{{ cx_id }}">
+        </div>
+        <div class="form-group">
+            <label for="keywords">📝 Enter keywords (one per line):</label>
+            <textarea name="keywords" rows="8">{{ keywords }}</textarea>
+        </div>
+        <input type="submit" value="Track Rankings">
+    </form>
+
+    {% if results %}
+        <h3>📈 Results</h3>
+        <table>
+            <tr>
+                <th>Keyword</th>
+                <th>Rank</th>
+                <th>Title</th>
+                <th>URL</th>
+                <th>Snippet</th>
+                <th>Timestamp</th>
+            </tr>
+            {% for keyword, data in results.items() %}
+            <tr>
+                <td>{{ keyword }}</td>
+                <td>{{ data.rank if data.rank else 'N/A' }}</td>
+                <td>{{ data.title if data.title else 'N/A' }}</td>
+                <td><a href="{{ data.url }}" target="_blank">{{ data.url }}</a></td>
+                <td>{{ data.snippet if data.snippet else 'N/A' }}</td>
+                <td>{{ data.timestamp }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    {% endif %}
+</body>
+</html>

@@ -1,4 +1,5 @@
-# File: functions_folder/keyword_monitor_googleapi.py
+# File: functions_folder/keyword_monitor.py
+# This file uses Google Search API
 
 import requests
 import json
@@ -24,7 +25,7 @@ def save_json(data, folder_path, filename):
     except Exception as e:
         print(f"Error saving {filename}: {e}")
 
-def track_keyword_rankings_googleapi(keywords, api_key, cx_id, max_results=10):
+def track_keyword_rankings(keywords, api_key, cx_id, max_results=10):
     base_url = "https://www.googleapis.com/customsearch/v1"
     output = {}
     full_data = {}
@@ -63,7 +64,7 @@ if __name__ == "__main__":
     test_api_key = os.getenv("GOOGLE_API_KEY")
     test_cx_id = os.getenv("GOOGLE_CX_ID")
 
-    output, full_data = track_keyword_rankings_googleapi(test_keywords, test_api_key, test_cx_id)
+    output, full_data = track_keyword_rankings(test_keywords, test_api_key, test_cx_id)
     folder = create_timestamped_folder()
 
     for keyword in test_keywords:

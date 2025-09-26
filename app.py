@@ -1,5 +1,4 @@
 from flask import Flask,request, render_template, send_file
-#from functions import *
 
 from functions_folder.performance_audit import run_lighthouse_audit
 from functions_folder.content_scorer import content_scorer
@@ -20,7 +19,6 @@ from collections import Counter
 
 from functions_folder.trend_visualizer import create_sample_data, plot_trends
 import pandas as pd
-import os
 
 from functions_folder.ranking_forecast_model import (
     load_sample_data,
@@ -29,9 +27,10 @@ from functions_folder.ranking_forecast_model import (
     generate_forecast_summary
 )
 
+from functions_folder.keyword_monitor import track_keyword_rankings, create_timestamped_folder, sanitize_filename, save_json
+from dotenv import load_dotenv
+import os
 
-
-import os 
 
 app=Flask(__name__)
 
@@ -398,6 +397,34 @@ def ranking_forecast():
                            show_form=show_form)
 
 
+@app.route("/keyword_monitor", methods=["GET", "POST"])
+def keyword_monitor():
+    results = {}
+    full_data = {}
+    keywords = ""
+    api_key = ""
+    cx_id = ""
+
+    if request.method == "POST":
+        keywords = request.form.get("keywords", "").strip()
+        api_key = request.form.get("api_key", "").strip()
+        cx_id = request.form.get("cx_id", "").strip()
+        keyword_list = [kw.strip() for kw in keywords.split("\n") if kw.strip()]
+
+        if keyword_list and api_key and cx_id:
+            results, full_data = track_keyword_rankings(keyword_list, api_key, cx_id)
+            folder = create_timestamped_folder()
+
+            for keyword in keyword_list:
+                safe_name = sanitize_filename(keyword)
+                save_json(full_data.get(keyword, {}), folder, f"{safe_name}_full_data.json")
+                save_json(results.get(keyword, {}), folder, f"{safe_name}_result.json")
+
+    return render_template("keyword_monitor.html",
+                           keywords=keywords,
+                           api_key=api_key,
+                           cx_id=cx_id,
+                           results=results)
 
 
 
