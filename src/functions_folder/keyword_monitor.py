@@ -6,7 +6,7 @@ import re
 from datetime import datetime
 from dotenv import load_dotenv
 
-def create_timestamped_folder(base_name="static/KM result"):
+def create_timestamped_folder(base_name="src/static/KM result"):
     now = datetime.now()
     formatted_time = now.strftime("%d-%b-%Y %I-%M %p").lstrip("0")
     folder_name = f"{base_name} {formatted_time}"
