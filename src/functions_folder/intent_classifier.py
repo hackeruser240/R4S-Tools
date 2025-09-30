@@ -11,14 +11,14 @@ bert_model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # Load or train classifier
 try:
-    clf = joblib.load('functions_folder/intent_model.pkl')
+    clf = joblib.load('intent_model.pkl')
 except FileNotFoundError:
     sample_texts = ["buy MOF membrane", "how does crystallization work?", "login issue"]
     sample_labels = ["purchase", "informational", "support"]
     X_train = bert_model.encode(sample_texts)
     clf = LogisticRegression()
     clf.fit(X_train, sample_labels)
-    joblib.dump(clf, 'functions_folder/intent_model.pkl')
+    joblib.dump(clf, 'intent_model.pkl')
 
 def classify_intents(text_list):
     embeddings = bert_model.encode(text_list)

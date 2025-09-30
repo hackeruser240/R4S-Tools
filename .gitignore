@@ -1,20 +1,22 @@
 #main folder:
-
 __pycache__/
 aio-env313/
 aio-env312/
 aio-env311/
-audits/
-optimized/
-static/
-uploads/
 prompts/
 old env/
-templates/*.txt
 .gitignore
 
+#SRC: 
+src/audits/
+src/static/
+src/uploads/
+src/templates/*.txt
+
+
 #functions_folder
-functions_folder/__pycache__/
-functions_folder/*.*
-!functions_folder/results.txt
-!functions_folder/*.py
+src/functions_folder/__pycache__/
+src/functions_folder/optimized/
+src/functions_folder/*.*
+!src/functions_folder/results.txt
+!src/functions_folder/*.py
