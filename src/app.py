@@ -29,7 +29,7 @@ from functions_folder.ranking_forecast_model import (
 
 from functions_folder.keyword_monitor import perform_google_search, find_keyword_rank, create_timestamped_folder, save_json
 import os
-from dotenv import load_dotenv
+from dotenv import load_dotenv; load_dotenv()
 
 
 
@@ -406,7 +406,7 @@ def keyword_monitor():
 
     if request.method == "POST":
         keywords = request.form.get("keywords", "")
-        tokenize = request.form.get("tokenize") == "on"
+        tokenize = bool(request.form.get("tokenize"))
         keyword_list = [kw.strip() for kw in keywords.split(",") if kw.strip()]
         api_key = os.getenv("GOOGLE_API_KEY", "your_api_key_here")
         cx_id = os.getenv("GOOGLE_CX_ID", "your_cx_id_here")

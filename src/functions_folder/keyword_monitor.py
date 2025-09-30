@@ -82,7 +82,7 @@ if __name__ == "__main__":
     parser.add_argument("--keywords", type=str, nargs='*', default=None)
     args = parser.parse_args()
 
-    test_keywords = args.keywords if args.keywords else ["SEO tools"]
+    test_keywords = args.keywords if args.keywords else ["SEO masterz"]
     test_api_key = os.getenv("GOOGLE_API_KEY", "your_api_key_here")
     test_cx_id = os.getenv("GOOGLE_CX_ID", "your_cx_id_here")
 
