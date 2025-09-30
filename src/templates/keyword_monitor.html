@@ -1,77 +1,53 @@
-<!-- File: templates/keyword_monitor.html -->
-
 <!DOCTYPE html>
 <html>
 <head>
     <title>Keyword Monitor</title>
-    <meta charset="utf-8">
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; max-width: 900px; }
-        .form-group { margin-bottom: 20px; }
-        textarea, input[type="text"] { width: 100%; padding: 8px; font-size: 14px; }
-        input[type="submit"] { padding: 10px 20px; font-size: 16px; }
-        table { border-collapse: collapse; width: 100%; margin-top: 30px; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; font-size: 14px; }
-        th { background-color: #f2f2f2; }
-        .instructions { background-color: #f9f9f9; padding: 20px; border-left: 4px solid #007BFF; margin-bottom: 30px; }
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        input[type="text"] { width: 400px; padding: 8px; }
+        label { font-weight: bold; }
+        .result { margin-top: 20px; padding: 10px; border: 1px solid #ccc; }
+        .description { background-color: #f9f9f9; padding: 15px; border-left: 4px solid #007BFF; margin-bottom: 20px; }
     </style>
 </head>
-
 <body>
-    <h2>🔍 Keyword Monitor (Google Search API)</h2>
+    <h1>Keyword Monitor</h1>
 
-    <div class="instructions">
-        <h3>What is this tool?</h3>
-        <p>This tool helps you track how specific keywords appear in Google search results. It’s useful for understanding how visible your content is online, especially if you're working on SEO, marketing, or content strategy.</p>
-
-        <h3>How to use it:</h3>
+    <div class="description">
+        <p><strong>How to use this tool:</strong></p>
         <ul>
-            <li>Enter your <strong>Google API Key</strong> and <strong> Google Engine ID (cx)</strong>. These are needed to access Google search results.</li>
-            <li>Type one or more keywords in the box below — one per line.</li>
-            <li>Click <strong>Track Rankings</strong> to see the top result for each keyword.</li>
-            <li>The tool will also save the results in a folder on the server for future reference.</li>
+            <li>Enter one or more keywords separated by commas (e.g., <em>SEO Masterz, website optimization</em>).</li>
+            <li>Enable <strong>tokenization</strong> to allow partial matching of keywords across search results.</li>
+            <li>Click <strong>Scan Keywords</strong> to perform a Google Custom Search for each keyword.</li>
+            <li>The tool will analyze the top 10 search results and identify the first match for each keyword.</li>
+            <li>Results will be saved in a timestamped folder and displayed below, including matched titles and URLs.</li>
         </ul>
-        <p><em>You don’t need any technical knowledge — just copy and paste your keywords and click the button.</em></p>
+        <p>This tool helps you monitor keyword visibility and ranking trends using Google’s Custom Search API.</p>
     </div>
 
     <form method="POST">
-        <div class="form-group">
-            <label for="api_key">🔑 Google API Key:</label>
-            <input type="text" name="api_key" value="{{ api_key }}">
-        </div>
-        <div class="form-group">
-            <label for="cx_id">🔍 Search Engine ID (cx):</label>
-            <input type="text" name="cx_id" value="{{ cx_id }}">
-        </div>
-        <div class="form-group">
-            <label for="keywords">📝 Enter keywords (one per line):</label>
-            <textarea name="keywords" rows="8">{{ keywords }}</textarea>
-        </div>
-        <input type="submit" value="Track Rankings">
+        <label for="keywords">Enter keywords (comma-separated):</label><br>
+        <input type="text" name="keywords" id="keywords" value="{{ keywords }}"><br><br>
+
+        <label for="tokenize">Enable tokenization:</label>
+        <input type="checkbox" name="tokenize" id="tokenize" {% if tokenize %}checked{% endif %}><br><br>
+
+        <input type="submit" value="Scan Keywords">
     </form>
 
-    {% if results %}
-        <h3>📈 Results</h3>
-        <table>
-            <tr>
-                <th>Keyword</th>
-                <th>Rank</th>
-                <th>Title</th>
-                <th>URL</th>
-                <th>Snippet</th>
-                <th>Timestamp</th>
-            </tr>
-            {% for keyword, data in results.items() %}
-            <tr>
-                <td>{{ keyword }}</td>
-                <td>{{ data.rank if data.rank else 'N/A' }}</td>
-                <td>{{ data.title if data.title else 'N/A' }}</td>
-                <td><a href="{{ data.url }}" target="_blank">{{ data.url }}</a></td>
-                <td>{{ data.snippet if data.snippet else 'N/A' }}</td>
-                <td>{{ data.timestamp }}</td>
-            </tr>
-            {% endfor %}
-        </table>
+    {% if result %}
+        <h2>Results</h2>
+        {% for item in result %}
+            <div class="result">
+                <strong>Keyword:</strong> {{ item.keyword }}<br>
+                <strong>Rank:</strong> {{ item.rank }}<br>
+                <strong>Saved Folder:</strong> {{ item.folder }}<br>
+                {% if item.matched_result.title %}
+                    <strong>Matched Title:</strong> {{ item.matched_result.title }}<br>
+                    <strong>URL:</strong> <a href="{{ item.matched_result.link }}" target="_blank">{{ item.matched_result.link }}</a><br>
+                {% endif %}
+            </div>
+        {% endfor %}
     {% endif %}
 </body>
 </html>

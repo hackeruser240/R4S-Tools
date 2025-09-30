@@ -27,9 +27,10 @@ from functions_folder.ranking_forecast_model import (
     generate_forecast_summary
 )
 
-from functions_folder.keyword_monitor import track_keyword_rankings, create_timestamped_folder, sanitize_filename, save_json
-from dotenv import load_dotenv
+from functions_folder.keyword_monitor import perform_google_search, find_keyword_rank, create_timestamped_folder, save_json
 import os
+from dotenv import load_dotenv
+
 
 
 app=Flask(__name__)
@@ -399,32 +400,36 @@ def ranking_forecast():
 
 @app.route("/keyword_monitor", methods=["GET", "POST"])
 def keyword_monitor():
-    results = {}
-    full_data = {}
+    result = None
     keywords = ""
-    api_key = ""
-    cx_id = ""
+    tokenize = True
 
     if request.method == "POST":
-        keywords = request.form.get("keywords", "").strip()
-        api_key = request.form.get("api_key", "").strip()
-        cx_id = request.form.get("cx_id", "").strip()
-        keyword_list = [kw.strip() for kw in keywords.split("\n") if kw.strip()]
+        keywords = request.form.get("keywords", "")
+        tokenize = request.form.get("tokenize") == "on"
+        keyword_list = [kw.strip() for kw in keywords.split(",") if kw.strip()]
+        api_key = os.getenv("GOOGLE_API_KEY", "your_api_key_here")
+        cx_id = os.getenv("GOOGLE_CX_ID", "your_cx_id_here")
+        folder = create_timestamped_folder()
 
-        if keyword_list and api_key and cx_id:
-            results, full_data = track_keyword_rankings(keyword_list, api_key, cx_id)
-            folder = create_timestamped_folder()
+        result = []
+        for keyword in keyword_list:
+            search_data = perform_google_search(keyword, api_key, cx_id)
+            rank, matched_result = find_keyword_rank(keyword, search_data, use_tokenization=tokenize)
 
-            for keyword in keyword_list:
-                safe_name = sanitize_filename(keyword)
-                save_json(full_data.get(keyword, {}), folder, f"{safe_name}_full_data.json")
-                save_json(results.get(keyword, {}), folder, f"{safe_name}_result.json")
+            summary = {
+                "keyword": keyword,
+                "rank": rank if rank else "Not found",
+                "matched_result": matched_result if matched_result else {},
+                "folder": folder
+            }
 
-    return render_template("keyword_monitor.html",
-                           keywords=keywords,
-                           api_key=api_key,
-                           cx_id=cx_id,
-                           results=results)
+            safe_name = keyword.replace(" ", "_").lower()
+            save_json(search_data, folder, f"{safe_name}_full_data.json")
+            save_json(summary, folder, f"{safe_name}_result.json")
+            result.append(summary)
+
+    return render_template("keyword_monitor.html", result=result, keywords=keywords, tokenize=tokenize)
 
 
 
