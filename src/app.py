@@ -18,7 +18,7 @@ from functions_folder.intent_classifier import classify_intents, summarize_inten
 from collections import Counter
 
 from functions_folder.trend_visualizer import create_sample_data, plot_trends
-import pandas as pd
+
 
 from functions_folder.ranking_forecast_model import (
     load_sample_data,
@@ -30,7 +30,42 @@ from functions_folder.ranking_forecast_model import (
 from functions_folder.keyword_monitor import perform_google_search, find_keyword_rank, create_timestamped_folder, save_json
 import os
 from dotenv import load_dotenv; load_dotenv()
+import logging
+import pandas as pd
+from logging.handlers import RotatingFileHandler
 
+
+
+def mainroot_logger(script_name):
+    log_dir = os.path.join(os.path.dirname(__file__), "functions_folder", "logs")
+    os.makedirs(log_dir, exist_ok=True)
+    log_path = os.path.join(log_dir, f"LOGS-{script_name}.txt")
+    logger = logging.getLogger("app.py")
+    logger.setLevel(logging.INFO)
+
+    if not logger.hasHandlers():
+        # Console Handler
+        console_handler = logging.StreamHandler()
+        console_handler.setLevel(logging.INFO)
+
+        # File Handler with rotation
+        file_handler = RotatingFileHandler(log_path, maxBytes=500_000, backupCount=3, encoding="utf-8")
+        file_handler.setLevel(logging.INFO)
+
+        # Formatter
+        datefmt='%d-%b-%Y %I:%M %p'
+        formatter = logging.Formatter(
+            f"%(asctime)s [%(levelname)s] (%(module)s).py : %(message)s",
+            datefmt=datefmt
+        )
+
+        console_handler.setFormatter(formatter)
+        file_handler.setFormatter(formatter)
+
+        logger.addHandler(console_handler)
+        logger.addHandler(file_handler)
+
+    return logger
 
 
 app=Flask(__name__)
@@ -400,6 +435,7 @@ def ranking_forecast():
 
 @app.route("/keyword_monitor", methods=["GET", "POST"])
 def keyword_monitor():
+    logger = mainroot_logger("app.py")
     result = None
     keywords = ""
     tokenize = True
@@ -414,8 +450,9 @@ def keyword_monitor():
 
         result = []
         for keyword in keyword_list:
-            search_data = perform_google_search(keyword, api_key, cx_id)
-            rank, matched_result = find_keyword_rank(keyword, search_data, use_tokenization=tokenize)
+            search_data = perform_google_search(keyword, api_key, cx_id, logger=logger)
+            logger.info("Running from app.py")
+            rank, matched_result = find_keyword_rank(keyword, search_data, logger=logger,use_tokenization=tokenize)
 
             summary = {
                 "keyword": keyword,
