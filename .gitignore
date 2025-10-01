@@ -12,6 +12,7 @@ src/audits/
 src/static/
 src/uploads/
 src/templates/*.txt
+src/functions_folder/logs/*.txt
 
 
 #functions_folder

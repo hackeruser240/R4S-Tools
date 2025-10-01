@@ -5,6 +5,35 @@ import argparse
 import re
 from datetime import datetime
 from dotenv import load_dotenv
+import logging
+import os
+from logging.handlers import RotatingFileHandler
+
+# ─── Logger Setup ─────────────────────────────────────────────────────────────
+script_name = os.path.splitext(os.path.basename(__file__))[0]
+module_name = __name__  # "__main__" or "keyword_monitor"
+log_dir = os.path.join(os.path.dirname(__file__), "logs")
+os.makedirs(log_dir, exist_ok=True)
+log_path = os.path.join(log_dir, f"LOGS-{script_name}.txt")
+logger = logging.getLogger(script_name)
+logger.setLevel(logging.INFO)
+# Console Handler
+console_handler = logging.StreamHandler()
+console_handler.setLevel(logging.INFO)
+# File Handler with rotation
+file_handler = RotatingFileHandler(log_path, maxBytes=500_000, backupCount=3, encoding="utf-8")
+file_handler.setLevel(logging.INFO)
+# Formatter
+datefmt='%d-%b-%Y %I:%M %p'
+formatter = logging.Formatter( f"%(asctime)s [%(levelname)s] ({module_name}): %(message)s", datefmt=datefmt)
+console_handler.setFormatter(formatter)
+file_handler.setFormatter(formatter)
+# Attach handlers (avoid duplicates if re-imported)
+if not logger.hasHandlers():
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
+
+
 
 def create_timestamped_folder(base_name="src/static/KM result"):
     now = datetime.now()
@@ -14,6 +43,12 @@ def create_timestamped_folder(base_name="src/static/KM result"):
     return folder_name
 
 def perform_google_search(keyword, api_key, cx_id, max_results=10):
+    logger.info("\n" \
+    "*********************************************\n"\
+    "🔧 Logger initialized for keyword_monitor.py\n"\
+    "*********************************************\n"
+    )
+
     base_url = "https://www.googleapis.com/customsearch/v1"
     params = {
         "key": api_key,
@@ -34,11 +69,11 @@ def loose_match(keyword, text):
 
 def find_keyword_rank(keyword, search_results, use_tokenization=True):
     items = search_results.get("items", [])
-    print(f"\n🔍 Top 10 results for: {keyword}")
+    logger.info(f"\n🔍 Top 10 results for: {keyword}")
     for idx, item in enumerate(items):
         title = item.get("title", "")
         url = item.get("link", "")
-        print(f"{idx+1}. {title} → {url}")
+        logger.info(f"{idx+1}. {title} → {url}")
 
     for idx, item in enumerate(items):
         title = item.get("title", "")
@@ -69,7 +104,7 @@ def save_json(data, folder_path, filename):
         with open(full_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
     except Exception as e:
-        print(f"Error saving {filename}: {e}")
+        logger.error(f"Error saving {filename}: {e}")
 
 if __name__ == "__main__":
     load_dotenv()
@@ -103,6 +138,6 @@ if __name__ == "__main__":
         save_json(search_data, folder, f"{safe_name}_full_data.json")
         save_json(result_summary, folder, f"{safe_name}_result.json")
 
-        print(f"\n✅ Keyword: {keyword}")
-        print(f"   Rank: {result_summary['rank']}")
-        print(f"   Saved to folder: {folder}")
+        logger.info(f"\n✅ Keyword: {keyword}")
+        logger.info(f"   Rank: {result_summary['rank']}")
+        logger.info(f"   Saved to folder: {folder}")
