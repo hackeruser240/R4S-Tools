@@ -5,6 +5,37 @@ import argparse
 import re
 from datetime import datetime
 from dotenv import load_dotenv
+import logging
+import os
+from logging.handlers import RotatingFileHandler
+
+
+def setup_logger():
+    script_name = os.path.splitext(os.path.basename(__file__))[0]
+    module_name = __name__  # "__main__" or "keyword_monitor"
+    log_dir = os.path.join(os.path.dirname(__file__), "logs")
+    os.makedirs(log_dir, exist_ok=True)
+    log_path = os.path.join(log_dir, f"LOGS-{script_name}.txt")
+    logger = logging.getLogger(script_name)
+    logger.setLevel(logging.INFO)
+    # Console Handler
+    console_handler = logging.StreamHandler()
+    console_handler.setLevel(logging.INFO)
+    # File Handler with rotation
+    file_handler = RotatingFileHandler(log_path, maxBytes=500_000, backupCount=3, encoding="utf-8")
+    file_handler.setLevel(logging.INFO)
+    # Formatter
+    datefmt='%d-%b-%Y %I:%M %p'
+    formatter = logging.Formatter( f"%(asctime)s [%(levelname)s] ({module_name}): %(message)s", datefmt=datefmt)
+    console_handler.setFormatter(formatter)
+    file_handler.setFormatter(formatter)
+    # Attach handlers (avoid duplicates if re-imported)
+    if not logger.hasHandlers():
+        logger.addHandler(console_handler)
+        logger.addHandler(file_handler)
+
+    return logger
+
 
 def create_timestamped_folder(base_name="src/static/KM result"):
     now = datetime.now()
@@ -13,7 +44,13 @@ def create_timestamped_folder(base_name="src/static/KM result"):
     os.makedirs(folder_name, exist_ok=True)
     return folder_name
 
-def perform_google_search(keyword, api_key, cx_id, max_results=10):
+def perform_google_search(keyword, api_key, cx_id, logger, max_results=10):
+    logger.info("\n" \
+    "*********************************************\n"\
+    "🔧 Logger initialized for keyword_monitor.py\n"\
+    "*********************************************\n"
+    )
+
     base_url = "https://www.googleapis.com/customsearch/v1"
     params = {
         "key": api_key,
@@ -32,13 +69,13 @@ def loose_match(keyword, text):
     text = text.lower()
     return all(token in text for token in keyword_tokens)
 
-def find_keyword_rank(keyword, search_results, use_tokenization=True):
+def find_keyword_rank(keyword, search_results, logger, use_tokenization=True):
     items = search_results.get("items", [])
-    print(f"\n🔍 Top 10 results for: {keyword}")
+    logger.info(f"\n🔍 Top 10 results for: {keyword}")
     for idx, item in enumerate(items):
         title = item.get("title", "")
         url = item.get("link", "")
-        print(f"{idx+1}. {title} → {url}")
+        logger.info(f"{idx+1}. {title} → {url}")
 
     for idx, item in enumerate(items):
         title = item.get("title", "")
@@ -69,10 +106,11 @@ def save_json(data, folder_path, filename):
         with open(full_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
     except Exception as e:
-        print(f"Error saving {filename}: {e}")
+        logger.error(f"Error saving {filename}: {e}")
 
 if __name__ == "__main__":
     load_dotenv()
+    logger=setup_logger()
     parser = argparse.ArgumentParser(description="Keyword relevance scanner")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--tokenize", dest="tokenize", action="store_true", help="Enable tokenization")
@@ -89,8 +127,8 @@ if __name__ == "__main__":
     folder = create_timestamped_folder()
 
     for keyword in test_keywords:
-        search_data = perform_google_search(keyword, test_api_key, test_cx_id)
-        rank, matched_result = find_keyword_rank(keyword, search_data, use_tokenization=args.tokenize)
+        search_data = perform_google_search(keyword, test_api_key, test_cx_id, logger=logger)
+        rank, matched_result = find_keyword_rank(keyword, search_data,logger=logger, use_tokenization=args.tokenize)
 
         result_summary = {
             "keyword": keyword,
@@ -103,6 +141,6 @@ if __name__ == "__main__":
         save_json(search_data, folder, f"{safe_name}_full_data.json")
         save_json(result_summary, folder, f"{safe_name}_result.json")
 
-        print(f"\n✅ Keyword: {keyword}")
-        print(f"   Rank: {result_summary['rank']}")
-        print(f"   Saved to folder: {folder}")
+        logger.info(f"\n✅ Keyword: {keyword}")
+        logger.info(f"   Rank: {result_summary['rank']}")
+        logger.info(f"   Saved to folder: {folder}")
