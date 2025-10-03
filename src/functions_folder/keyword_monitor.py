@@ -7,37 +7,14 @@ from datetime import datetime
 from dotenv import load_dotenv
 import logging
 import os
-from logging.handlers import RotatingFileHandler
+
 
 from logger_config import get_custom_logger
 
-logger = get_custom_logger()
+from APP_loggerSetup import app_loggerSetup
+from LOCAL_loggerSetup import local_loggerSetup
 
-def setup_logger():
-    script_name = os.path.splitext(os.path.basename(__file__))[0]
-    module_name = __name__  # "__main__" or "keyword_monitor"
-    log_dir = os.path.join(os.path.dirname(__file__), "logs")
-    os.makedirs(log_dir, exist_ok=True)
-    log_path = os.path.join(log_dir, f"LOGS-{script_name}.txt")
-    logger = logging.getLogger(script_name)
-    logger.setLevel(logging.INFO)
-    # Console Handler
-    console_handler = logging.StreamHandler()
-    console_handler.setLevel(logging.INFO)
-    # File Handler with rotation
-    file_handler = RotatingFileHandler(log_path, maxBytes=500_000, backupCount=3, encoding="utf-8")
-    file_handler.setLevel(logging.INFO)
-    # Formatter
-    datefmt='%d-%b-%Y %I:%M %p'
-    formatter = logging.Formatter( f"%(asctime)s [%(levelname)s] ({module_name}): %(message)s", datefmt=datefmt)
-    console_handler.setFormatter(formatter)
-    file_handler.setFormatter(formatter)
-    # Attach handlers (avoid duplicates if re-imported)
-    if not logger.hasHandlers():
-        logger.addHandler(console_handler)
-        logger.addHandler(file_handler)
-
-    return logger
+logger = app_loggerSetup()
 
 
 def create_timestamped_folder(base_name="static/KM result"):
@@ -113,7 +90,11 @@ def save_json(data, folder_path, filename):
 
 if __name__ == "__main__":
     load_dotenv()
-    logger=setup_logger()
+    
+    script_name = os.path.splitext(os.path.basename(__file__))[0]
+    logger=logging.getLogger("keyword_monitor")
+    logger=local_loggerSetup(logger,script_name)
+    
     parser = argparse.ArgumentParser(description="Keyword relevance scanner")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--tokenize", dest="tokenize", action="store_true", help="Enable tokenization")
@@ -130,8 +111,8 @@ if __name__ == "__main__":
     folder = create_timestamped_folder()
 
     for keyword in test_keywords:
-        search_data = perform_google_search(keyword, test_api_key, test_cx_id, logger=logger)
-        rank, matched_result = find_keyword_rank(keyword, search_data,logger=logger, use_tokenization=args.tokenize)
+        search_data = perform_google_search(keyword, test_api_key, test_cx_id)
+        rank, matched_result = find_keyword_rank(keyword, search_data, use_tokenization=args.tokenize)
 
         result_summary = {
             "keyword": keyword,
