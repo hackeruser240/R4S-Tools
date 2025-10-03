@@ -9,6 +9,9 @@ import logging
 import os
 from logging.handlers import RotatingFileHandler
 
+from logger_config import get_custom_logger
+
+logger = get_custom_logger()
 
 def setup_logger():
     script_name = os.path.splitext(os.path.basename(__file__))[0]
@@ -37,14 +40,14 @@ def setup_logger():
     return logger
 
 
-def create_timestamped_folder(base_name="src/static/KM result"):
+def create_timestamped_folder(base_name="static/KM result"):
     now = datetime.now()
     formatted_time = now.strftime("%d-%b-%Y %I-%M %p").lstrip("0")
     folder_name = f"{base_name} {formatted_time}"
     os.makedirs(folder_name, exist_ok=True)
     return folder_name
 
-def perform_google_search(keyword, api_key, cx_id, logger, max_results=10):
+def perform_google_search(keyword, api_key, cx_id, max_results=10):
     logger.info("\n" \
     "*********************************************\n"\
     "🔧 Logger initialized for keyword_monitor.py\n"\
@@ -69,7 +72,7 @@ def loose_match(keyword, text):
     text = text.lower()
     return all(token in text for token in keyword_tokens)
 
-def find_keyword_rank(keyword, search_results, logger, use_tokenization=True):
+def find_keyword_rank(keyword, search_results, use_tokenization=True):
     items = search_results.get("items", [])
     logger.info(f"\n🔍 Top 10 results for: {keyword}")
     for idx, item in enumerate(items):
