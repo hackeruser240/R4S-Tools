@@ -20,5 +20,9 @@ scikit-learn
 
 #keyword_monitor:
 dotenv
+
+#extra added:
 textstat
 bs4
+spacy
+keybert
