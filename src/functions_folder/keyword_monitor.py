@@ -9,7 +9,7 @@ import logging
 import os
 
 
-from logger_config import get_custom_logger
+
 
 from APP_loggerSetup import app_loggerSetup
 from LOCAL_loggerSetup import local_loggerSetup
@@ -90,10 +90,8 @@ def save_json(data, folder_path, filename):
 
 if __name__ == "__main__":
     load_dotenv()
-    
-    script_name = os.path.splitext(os.path.basename(__file__))[0]
-    logger=logging.getLogger("keyword_monitor")
-    logger=local_loggerSetup(logger,script_name)
+
+    logger=local_loggerSetup(use_filename=__file__)
     
     parser = argparse.ArgumentParser(description="Keyword relevance scanner")
     group = parser.add_mutually_exclusive_group()
