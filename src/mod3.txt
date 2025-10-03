@@ -21,3 +21,4 @@ scikit-learn
 #keyword_monitor:
 dotenv
 textstat
+bs4
