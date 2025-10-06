@@ -315,13 +315,15 @@ def internal_link_optimizer():
 def intent_classifier():
     result = {}
     intent_counts = {}
-    text_list=[]
+    raw_input = ""  # this will hold the actual string for the textarea
+
     if request.method == 'POST':
-        user_input = request.form['keywords']
-        text_list = [line.strip() for line in user_input.split('\n') if line.strip()]
+        raw_input = request.form['keywords']
+        text_list = [line.strip() for line in raw_input.split('\n') if line.strip()]
         result = classify_intents(text_list)
         intent_counts = Counter(result.values())
-    return render_template('intent_classifier.html', result=result, intent_counts=intent_counts, content=text_list)
+
+    return render_template('intent_classifier.html', result=result, intent_counts=intent_counts, content=raw_input)
 
 @app.route('/trend_visualizer', methods=['GET', 'POST'])
 def trend_visualizer():
