@@ -1,0 +1,26 @@
+#main folder:
+__pycache__/
+aio-env313/
+aio-env312/
+aio-env311/
+prompts/
+old env/
+.gitignore
+
+#SRC: 
+src/audits/
+src/static/
+src/uploads/
+src/templates/*.txt
+src/*.pkl
+src/logs
+
+
+
+#functions_folder
+src/functions_folder/__pycache__/
+src/functions_folder/optimized/
+src/functions_folder/*.*
+src/functions_folder/logs/
+!src/functions_folder/results.txt
+!src/functions_folder/*.py
