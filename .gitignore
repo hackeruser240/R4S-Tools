@@ -25,6 +25,7 @@ src/logs/
 #functions_folder
 src/functions_folder/__pycache__/
 src/functions_folder/optimized/
+src/functions_folder/static/
 src/functions_folder/*.*
 src/functions_folder/logs/
 !src/functions_folder/results.txt
