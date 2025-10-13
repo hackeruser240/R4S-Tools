@@ -6,7 +6,14 @@ import re
 from datetime import datetime
 from dotenv import load_dotenv
 
-def create_timestamped_folder(base_name="src/static/KM result"):
+
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
+
+logger = app_loggerSetup()
+
+
+def create_timestamped_folder(base_name="static/KM result"):
     now = datetime.now()
     formatted_time = now.strftime("%d-%b-%Y %I-%M %p").lstrip("0")
     folder_name = f"{base_name} {formatted_time}"
@@ -14,6 +21,12 @@ def create_timestamped_folder(base_name="src/static/KM result"):
     return folder_name
 
 def perform_google_search(keyword, api_key, cx_id, max_results=10):
+    logger.info("\n" \
+    "*********************************************\n"\
+    "🔧 Logger initialized for keyword_monitor.py\n"\
+    "*********************************************\n"
+    )
+
     base_url = "https://www.googleapis.com/customsearch/v1"
     params = {
         "key": api_key,
@@ -34,11 +47,11 @@ def loose_match(keyword, text):
 
 def find_keyword_rank(keyword, search_results, use_tokenization=True):
     items = search_results.get("items", [])
-    print(f"\n🔍 Top 10 results for: {keyword}")
+    logger.info(f"\n🔍 Top 10 results for: {keyword}")
     for idx, item in enumerate(items):
         title = item.get("title", "")
         url = item.get("link", "")
-        print(f"{idx+1}. {title} → {url}")
+        logger.info(f"{idx+1}. {title} → {url}")
 
     for idx, item in enumerate(items):
         title = item.get("title", "")
@@ -69,10 +82,13 @@ def save_json(data, folder_path, filename):
         with open(full_path, "w", encoding="utf-8") as f:
             json.dump(data, f, indent=2, ensure_ascii=False)
     except Exception as e:
-        print(f"Error saving {filename}: {e}")
+        logger.error(f"Error saving {filename}: {e}")
 
 if __name__ == "__main__":
     load_dotenv()
+
+    logger=local_loggerSetup(use_filename=__file__)
+    
     parser = argparse.ArgumentParser(description="Keyword relevance scanner")
     group = parser.add_mutually_exclusive_group()
     group.add_argument("--tokenize", dest="tokenize", action="store_true", help="Enable tokenization")
@@ -103,6 +119,6 @@ if __name__ == "__main__":
         save_json(search_data, folder, f"{safe_name}_full_data.json")
         save_json(result_summary, folder, f"{safe_name}_result.json")
 
-        print(f"\n✅ Keyword: {keyword}")
-        print(f"   Rank: {result_summary['rank']}")
-        print(f"   Saved to folder: {folder}")
+        logger.info(f"\n✅ Keyword: {keyword}")
+        logger.info(f"   Rank: {result_summary['rank']}")
+        logger.info(f"   Saved to folder: {folder}")

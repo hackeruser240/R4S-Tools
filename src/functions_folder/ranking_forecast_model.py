@@ -8,6 +8,11 @@ from prophet import Prophet
 from xgboost import XGBRegressor
 from sklearn.metrics import mean_squared_error
 
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
+
+logger = app_loggerSetup()
+
 def load_sample_data(keyword="Sample Keyword"):
     """
     Returns sample keyword ranking data for a given keyword.
@@ -144,18 +149,19 @@ def generate_forecast_summary(forecast_data: dict) -> str:
     return summary
 
 if __name__ == "__main__":
+    logger=local_loggerSetup(use_filename=__file__)
     keyword = "MOF membranes"
     sample_data = load_sample_data(keyword=keyword)
     result = ranking_forecast_model(sample_data, forecast_horizon=30)
     summary_text = generate_forecast_summary(result)
 
-    print(f"\n🔍 Forecast for keyword: {result['keyword']}\n")
-    print("📈 Forecast Output (first 5 days):")
+    logger.info(f"\n🔍 Forecast for keyword: {result['keyword']}\n")
+    logger.info("📈 Forecast Output (first 5 days):")
     for row in result["forecast"][:5]:
-        print(row)
+        logger.info(row)
 
-    print("\n📊 Model Metadata:")
-    print(result["model_metadata"])
+    logger.info("\n📊 Model Metadata:")
+    logger.info(result["model_metadata"])
 
     # Visualization
     html_chart = visualize_forecast_results(result)
@@ -186,5 +192,5 @@ if __name__ == "__main__":
         </html>
         """)
 
-    print(f"\n📊 Interactive chart + summary saved to: {output_path}")
-    print("💡 Open this file in your browser to view the forecast and summary.")
+    logger.info(f"\n📊 Interactive chart + summary saved to: {output_path}")
+    logger.info("💡 Open this file in your browser to view the forecast and summary.")

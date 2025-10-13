@@ -18,7 +18,7 @@ from functions_folder.intent_classifier import classify_intents, summarize_inten
 from collections import Counter
 
 from functions_folder.trend_visualizer import create_sample_data, plot_trends
-import pandas as pd
+
 
 from functions_folder.ranking_forecast_model import (
     load_sample_data,
@@ -31,9 +31,16 @@ from functions_folder.keyword_monitor import perform_google_search, find_keyword
 import os
 from dotenv import load_dotenv; load_dotenv()
 
+import pandas as pd
+
+from logger_config import get_custom_logger
+
+
 
 
 app=Flask(__name__)
+logger = get_custom_logger()
+
 
 UPLOAD_FOLDER = os.path.join(app.root_path, 'uploads')
 REPORT_FOLDER = os.path.join(app.root_path, 'static', 'reports')
@@ -402,6 +409,7 @@ def ranking_forecast():
 
 @app.route("/keyword_monitor", methods=["GET", "POST"])
 def keyword_monitor():
+    logger.info("Running 'keyword_monitor' from app.py: above")
     result = None
     keywords = ""
     tokenize = True
@@ -417,19 +425,20 @@ def keyword_monitor():
         result = []
         for keyword in keyword_list:
             search_data = perform_google_search(keyword, api_key, cx_id)
-            rank, matched_result = find_keyword_rank(keyword, search_data, use_tokenization=tokenize)
+            logger.info("Running from app.py: below")
+            rank, matched_result = find_keyword_rank(keyword, search_data,use_tokenization=tokenize)
 
-            summary = {
-                "keyword": keyword,
-                "rank": rank if rank else "Not found",
-                "matched_result": matched_result if matched_result else {},
-                "folder": folder
-            }
+        summary = {
+            "keyword": keyword,
+            "rank": rank if rank else "Not found",
+            "matched_result": matched_result if matched_result else {},
+            "folder": folder
+        }
 
-            safe_name = keyword.replace(" ", "_").lower()
-            save_json(search_data, folder, f"{safe_name}_full_data.json")
-            save_json(summary, folder, f"{safe_name}_result.json")
-            result.append(summary)
+        safe_name = keyword.replace(" ", "_").lower()
+        save_json(search_data, folder, f"{safe_name}_full_data.json")
+        save_json(summary, folder, f"{safe_name}_result.json")
+        result.append(summary)
 
     return render_template("keyword_monitor.html", result=result, keywords=keywords, tokenize=tokenize)
 

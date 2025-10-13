@@ -4,6 +4,11 @@ from textblob import TextBlob
 from transformers import pipeline
 import random
 
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
+
+logger = app_loggerSetup()
+
 def score_headline(headline):
     """
     Scores a headline using sentiment and semantic fluency.
@@ -69,12 +74,14 @@ def score_headline(headline):
 
 # 🔧 Local test block
 if __name__ == "__main__":
+    logger=local_loggerSetup(use_filename=__file__)
     test_headline = "New AI tool revolutionizes genomic research"
+    logger.info(f"{test_headline}")
     result = score_headline(test_headline)
-    print("\n==========Result==========\n")
-    print("Headline:", result["headline"])
-    print("Polarity:", result["polarity"])
-    print("Subjectivity:", result["subjectivity"])
-    print("Fluency Score:", result["fluency"])
-    print("Suggestions:", result["suggestions"])
-    print("Improved Variants:", result["improved_variants"])
+    logger.info("\n==========Result==========\n")
+    logger.info("Headline:", result["headline"])
+    logger.info("Polarity:", result["polarity"])
+    logger.info("Subjectivity:", result["subjectivity"])
+    logger.info("Fluency Score:", result["fluency"])
+    logger.info("Suggestions:", result["suggestions"])
+    logger.info("Improved Variants:", result["improved_variants"])

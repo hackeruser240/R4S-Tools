@@ -4,6 +4,11 @@ import spacy
 import json
 from typing import Dict
 
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
+
+logger = app_loggerSetup()
+
 # Load spaCy model (English by default)
 nlp = spacy.load("en_core_web_sm")
 
@@ -42,8 +47,9 @@ def generate_schema_ld(text: str, schema_type: str = "Article") -> Dict:
 
 # 🔬 Local test harness
 if __name__ == "__main__":
+    logger=local_loggerSetup(use_filename=__file__)
     sample_text = """
     On September 15, 2025, Dr. Lena Morales submitted her final report titled "Genomic Drift in Isolated Populations" to the Bioinformatics Review Board. The document included 42 annotated datasets, each tagged with a unique identifier and timestamp. Her team, based in Oslo, Norway, used a hybrid pipeline combining UMI-based consensus sequencing and Bayesian error correction. The project cost was estimated at $128,400, with a projected completion date of March 2026. For inquiries, contact lena.morales@genomehub.org.
     """
     schema = generate_schema_ld(sample_text, schema_type="Article")
-    print(json.dumps(schema, indent=2))
+    logger.info(json.dumps(schema, indent=2))

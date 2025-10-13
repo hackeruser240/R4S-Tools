@@ -1,10 +1,14 @@
 # internal_link_optimizer.py
 
 from bs4 import BeautifulSoup
-
 import requests
 import networkx as nx
 import argparse
+
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
+
+logger = app_loggerSetup()
 
 def normalize_page_id(url):
     path = requests.utils.urlparse(url).path.strip('/')
@@ -89,25 +93,25 @@ def suggest_internal_links(pages, root_url, existing_links=None, top_n=3):
     return suggestions_output
 
 if __name__ == "__main__":
+    logger=local_loggerSetup(use_filename=__file__)
     parser = argparse.ArgumentParser(description="Internal Link Optimizer")
     parser.add_argument('--url', default="https://www.seomasterz.com/", help='Root URL to analyze')
     parser.add_argument('--max_links', type=int, default=8, help='Max internal links to extract')
     parser.add_argument('--top_n', type=int, default=3, help='Number of link suggestions per page')
     args = parser.parse_args()
 
-    print(f"🔍 Crawling homepage: {args.url}")
+    logger.info(f"🔍 Crawling homepage: {args.url}")
     pages, error = extract_internal_links(args.url, args.max_links)
 
     if error:
-        print(error)
+        logger.info(error)
     elif not pages:
-        print("No internal links found.")
+        logger.info("No internal links found.")
     else:
         suggestions = suggest_internal_links(pages, args.url, top_n=args.top_n)
-        print("\n📌 Suggested Internal Linking Strategy:\n")
+        logger.info("\n📌 Suggested Internal Linking Strategy:\n")
         for item in suggestions:
-            print(f"Suggestion {item['index']}:")
-            print(f"The page {item['source']} should add internal links to the following pages:")
+            logger.info(f"Suggestion {item['index']}:")
+            logger.info(f"The page {item['source']} should add internal links to the following pages:")
             for target in item['targets']:
-                print(f"- {target}")
-            print()
+                logger.info(f"- {target}")

@@ -5,6 +5,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sentence_transformers import SentenceTransformer
 import numpy as np
 
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
+
+logger = app_loggerSetup()
+
 def find_content_gaps(your_text, competitor_texts, top_n=10):
     """
     Detect missing topics using TF-IDF and BERT embeddings.
@@ -54,6 +59,7 @@ def find_content_gaps(your_text, competitor_texts, top_n=10):
 
 # 🔧 Local test block
 if __name__ == "__main__":
+    logger=local_loggerSetup(use_filename=__file__)
     your_text = "We offer cloud-based data analytics and scalable infrastructure solutions."
     competitor_texts = [
         "Our platform provides AI-driven insights, predictive modeling, and real-time dashboards.",
@@ -61,4 +67,4 @@ if __name__ == "__main__":
     ]
     result = find_content_gaps(your_text, competitor_texts, top_n=5)
     for item in result:
-        print(f"{item['term']} | TF-IDF Gap: {item['tfidf_score']} | Semantic Similarity: {item['semantic_score']}")
+        logger.info(f"{item['term']} | TF-IDF Gap: {item['tfidf_score']} | Semantic Similarity: {item['semantic_score']}")

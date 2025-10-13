@@ -6,14 +6,19 @@ aio-env311/
 prompts/
 old env/
 .gitignore
+static/KM\ result*/
+logs/
+*.pkl
 
 #SRC: 
 src/audits/
 src/static/
+src/discarded/
+src/static/KM\ result*/
 src/uploads/
 src/templates/*.txt
 src/*.pkl
-src/logs
+src/logs/
 
 
 

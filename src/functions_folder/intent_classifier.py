@@ -7,6 +7,11 @@ from sentence_transformers import SentenceTransformer
 from collections import Counter
 from tabulate import tabulate
 
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
+
+logger = app_loggerSetup()
+
 bert_model = SentenceTransformer('all-MiniLM-L6-v2')
 
 # Load or train classifier
@@ -33,17 +38,18 @@ def summarize_intents(intent_dict):
     """
     # Tabular display
     table = [[text, intent] for text, intent in intent_dict.items()]
-    print("\n📊 Intent Classification Table:")
-    print(tabulate(table, headers=["Input Text", "Predicted Intent"], tablefmt="grid"))
+    logger.info("\n📊 Intent Classification Table:")
+    logger.info(tabulate(table, headers=["Input Text", "Predicted Intent"], tablefmt="grid"))
 
     # Count summary
     counts = Counter(intent_dict.values())
-    print("\n📈 Intent Counts:")
+    logger.info("\n📈 Intent Counts:")
     for intent, count in counts.items():
-        print(f"{intent}: {count}")
+        logger.info(f"{intent}: {count}")
 
 # 🔧 Local test block
 if __name__ == '__main__':
+    logger=local_loggerSetup(use_filename=__file__)
     test_inputs = [
         "need help with login",
         "purchase MOF membrane",
