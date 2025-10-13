@@ -5,14 +5,10 @@ import argparse
 import re
 from datetime import datetime
 from dotenv import load_dotenv
-import logging
-import os
 
 
-
-
-from APP_loggerSetup import app_loggerSetup
-from LOCAL_loggerSetup import local_loggerSetup
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
 
 logger = app_loggerSetup()
 

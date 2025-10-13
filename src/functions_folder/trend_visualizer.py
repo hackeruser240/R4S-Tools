@@ -4,6 +4,10 @@ import pandas as pd
 import plotly.express as px
 import numpy as np
 
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
+
+logger = app_loggerSetup()
 
 def plot_trends(df):
     """
@@ -67,8 +71,10 @@ if __name__ == '__main__':
         ])
     '''
 
+    logger=local_loggerSetup(use_filename=__file__)
+
     sample_data=create_sample_data()
     html_chart = plot_trends(sample_data)
     with open("static/trend_chart.html", "w", encoding="utf-8") as f:
         f.write(html_chart)
-    print("✅ Chart saved to trend_chart.html")
+    logger.info("✅ Chart saved to trend_chart.html")

@@ -1,6 +1,5 @@
 # File: functions_folder/topic_modeler.py
 
-import numpy as np
 from typing import List, Dict, Optional
 from sklearn.cluster import KMeans
 from sklearn.manifold import TSNE
@@ -8,9 +7,15 @@ from sentence_transformers import SentenceTransformer
 from gensim import corpora
 from gensim.models.ldamodel import LdaModel
 from gensim.parsing.preprocessing import preprocess_string, strip_punctuation, strip_numeric, remove_stopwords
+import numpy as np
 import matplotlib.pyplot as plt
 import pyLDAvis.gensim_models as gensimvis
 import pyLDAvis
+
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
+logger = app_loggerSetup()
+
 
 # 🧹 Text Cleaning
 def clean_texts(texts: List[str]) -> List[List[str]]:
@@ -62,6 +67,7 @@ def visualize_topics(method: str, lda_model=None, corpus=None, dictionary=None, 
         vis_data = gensimvis.prepare(lda_model, corpus, dictionary)
         pyLDAvis.save_html(vis_data, "static/lda_visualization.html")
         print("✅ LDA visualization saved as lda_visualization.html")
+        logger.info("✅ LDA visualization saved as lda_visualization.html")
     elif method == "bert":
         tsne = TSNE(n_components=2, perplexity = max(2, min(30, len(embeddings) - 1)), random_state=42)
         reduced = tsne.fit_transform(embeddings)
@@ -70,9 +76,11 @@ def visualize_topics(method: str, lda_model=None, corpus=None, dictionary=None, 
         plt.title("BERT Embedding Clusters")
         plt.savefig("static/bert_clusters.png")
         print("✅ BERT cluster plot saved as bert_clusters.png")
+        logger.info("✅ BERT cluster plot saved as bert_clusters.png")
 
 # 🧪 Local Test Harness
 if __name__ == "__main__":
+    logger=local_loggerSetup(use_filename=__file__)
     sample_texts = [
         "Crystallization techniques for organic semiconductors",
         "SEO optimization strategies for Flask applications",
@@ -89,17 +97,17 @@ if __name__ == "__main__":
     if method == "lda":
         topics, lda_model, corpus, dictionary = lda_topic_modeling(sample_texts, num_topics=3)
         for topic in topics:
-            print(f"\nTopic {topic['topic_id']}:")
-            print("Keywords:", topic['keywords'])
-            print("Texts:", topic['texts'])
+            logger.info(f"\nTopic {topic['topic_id']}:")
+            logger.info("Keywords:", topic['keywords'])
+            logger.info("Texts:", topic['texts'])
         if viz:
             visualize_topics("lda", lda_model=lda_model, corpus=corpus, dictionary=dictionary)
 
     elif method == "bert":
         topics, embeddings, labels = bert_topic_modeling(sample_texts, num_clusters=3)
         for topic in topics:
-            print(f"\nCluster {topic['topic_id']}:")
-            print("Keywords:", topic['keywords'])
-            print("Texts:", topic['texts'])
+            logger.info(f"\nCluster {topic['topic_id']}:")
+            logger.info("Keywords:", topic['keywords'])
+            logger.info("Texts:", topic['texts'])
         if viz:
             visualize_topics("bert", embeddings=embeddings, labels=labels)

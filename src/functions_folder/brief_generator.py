@@ -4,6 +4,11 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from transformers import pipeline
 import random
 
+from functions_folder.APP_loggerSetup import app_loggerSetup
+from functions_folder.LOCAL_loggerSetup import local_loggerSetup
+
+logger = app_loggerSetup()
+
 def generate_brief(seed_text, faq_count=5):
     """
     Generates a structured outline and FAQs from a seed topic or paragraph.
@@ -54,11 +59,12 @@ def generate_brief(seed_text, faq_count=5):
 
 # 🔧 Local test block
 if __name__ == "__main__":
+    logger=local_loggerSetup(use_filename=__file__)
     seed = "CRISPR technology in cancer therapy and its applications in precision medicine"
     result = generate_brief(seed, faq_count=3)
-    print("H1:", result["h1"])
-    print("H2s:", result["h2"])
-    print("H3s:", result["h3"])
-    print("\nFAQs:")
+    logger.info("H1:", result["h1"])
+    logger.info("H2s:", result["h2"])
+    logger.info("H3s:", result["h3"])
+    logger.info("\nFAQs:")
     for faq in result["faqs"]:
-        print(f"Q: {faq['question']}\nA: {faq['answer']}\n")
+        logger.info(f"Q: {faq['question']}\nA: {faq['answer']}\n")
