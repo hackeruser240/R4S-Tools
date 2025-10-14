@@ -5,7 +5,6 @@ import glob
 import shutil
 import webbrowser
 from urllib.parse import urlparse
-import httpx
 import sys
 import pprint
 
@@ -67,7 +66,7 @@ def run_lighthouse_audit(target_url):
             "html": html_path.replace("\\", "/"),
             "json": json_path.replace("\\", "/"),
             "report_id": report_id,
-            "warning": f"Lighthouse exited with code {result.returncode}" if result.returncode != 0 else None
+            #"warning": f"Lighthouse exited with code {result.returncode}" if result.returncode != 0 else None
         }
 
     except FileNotFoundError as e:

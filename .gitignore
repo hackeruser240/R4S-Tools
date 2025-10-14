@@ -30,3 +30,8 @@ src/functions_folder/*.*
 src/functions_folder/logs/
 !src/functions_folder/results.txt
 !src/functions_folder/*.py
+
+#gui:
+build/
+dist/
+*.spec
